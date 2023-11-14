@@ -1,11 +1,13 @@
+import { ReactElement } from "react";
 import Link from "next/link";
-import type { NextPage } from "next";
+import type { NextPageWithLayout } from "./_app";
 import { MetaHeader } from "~~/components/MetaHeader";
+import CleanLayout from "~~/components/layouts/CleanLayout";
 
-const Home: NextPage = () => {
+const LandingPage: NextPageWithLayout = () => {
   return (
     <>
-      <MetaHeader />
+      <MetaHeader /> {/* Look into MetaHeader - should it be moved to _app.tsx ??? */}
       <div className="flex flex-col items-center pt-10">
         <div className="px-5">
           <h1 className="text-center mb-8">
@@ -26,4 +28,8 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+LandingPage.getLayout = function getLayout(page: ReactElement) {
+  return <CleanLayout>{page}</CleanLayout>;
+};
+
+export default LandingPage;
