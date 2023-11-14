@@ -1,7 +1,12 @@
+import React, { ReactNode } from "react";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 
-export default function HeaderFooterLayout({ children }) {
+interface HeaderFooterLayoutProps {
+  children: ReactNode;
+}
+
+export default function HeaderFooterLayout({ children }: HeaderFooterLayoutProps) {
   return (
     <>
       <Header />
