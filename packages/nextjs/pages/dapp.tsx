@@ -41,7 +41,7 @@ const LandingPage: NextPageWithLayout = () => {
         {/* Form container */}
         <div className="card w-5/6 p-10 bg-secondary shadow-xl">
           {/* Initial Options */}
-          {formState === "start" || "login" ? (
+          {(formState === "start" || "login") && (
             <>
               <div className="px-5">
                 <h1 className="text-center mb-8 block text-4xl font-bold">CCIP Payroll</h1>
@@ -49,9 +49,9 @@ const LandingPage: NextPageWithLayout = () => {
               {formState === "start" && <ExistingOrNewMember updateFormState={updateFormState} />}
               {formState === "login" && <LoginEmailOrWallet updateFormState={updateFormState} />}
             </>
-          ) : null}
+          )}
           {/* Signup Options */}
-          {formState === "signup" ? (
+          {formState === "signup" && (
             <>
               <div className="px-5">
                 <h2 className="text-center mb-4 block text-3xl font-bold">
@@ -60,7 +60,7 @@ const LandingPage: NextPageWithLayout = () => {
               </div>
               <RegisterCompanyOrEmployee updateFormState={updateFormState} />
             </>
-          ) : null}
+          )}
         </div>
       </div>
     </>
