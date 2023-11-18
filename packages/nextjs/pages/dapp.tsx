@@ -33,6 +33,7 @@ const LandingPage: NextPageWithLayout = () => {
               {formState === "login" && <LoginEmailOrWallet updateFormState={updateFormState} />}
             </>
           )}
+
           {/* Signup Options */}
           {formState === "signup" && (
             <>
