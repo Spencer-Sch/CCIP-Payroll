@@ -6,6 +6,8 @@ import CleanLayout from "~~/components/layouts/CleanLayout";
 import ExistingOrNewMember from "~~/components/web-3-crew/ExistingOrNewMember";
 import LoginEmailOrWallet from "~~/components/web-3-crew/LoginEmailOrWallet";
 import RegisterCompanyOrEmployee from "~~/components/web-3-crew/RegisterCompanyOrEmployee";
+import RegisterCompanyForm from "~~/components/web-3-crew/forms/RegisterCompanyForm";
+import RegisterEmployeeForm from "~~/components/web-3-crew/forms/RegisterEmployeeForm";
 
 export type FormSteps = "start" | "login" | "signup" | "register-company" | "register-employee";
 
@@ -43,6 +45,30 @@ const LandingPage: NextPageWithLayout = () => {
                 </h2>
               </div>
               <RegisterCompanyOrEmployee updateFormState={updateFormState} />
+            </>
+          )}
+
+          {/* Register Company Form */}
+          {formState === "register-company" && (
+            <>
+              <div className="px-5">
+                <h2 className="text-center mb-4 block text-3xl font-bold">Enter Company Information</h2>
+              </div>
+              <div className="flex items-center justify-center w-full">
+                <RegisterCompanyForm updateFormState={updateFormState} />
+              </div>
+            </>
+          )}
+
+          {/* Register Employee Form */}
+          {formState === "register-employee" && (
+            <>
+              <div className="px-5">
+                <h2 className="text-center mb-4 block text-3xl font-bold">Enter Your Employee Details</h2>
+              </div>
+              <div className="flex items-center justify-center w-full">
+                <RegisterEmployeeForm updateFormState={updateFormState} />
+              </div>
             </>
           )}
         </div>
