@@ -24,7 +24,7 @@ const LandingPage: NextPageWithLayout = () => {
         {/* Form container */}
         <div className="card w-5/6 p-10 bg-secondary shadow-xl relative">
           {/* Initial Options */}
-          {(formState === "start" || "login") && (
+          {(formState === "start" || formState === "login") && (
             <>
               <div className="px-5">
                 <h1 className="text-center mb-8 block text-4xl font-bold">CCIP Payroll</h1>
