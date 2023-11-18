@@ -7,7 +7,10 @@ interface props {
 
 const BackButton = ({ updateFormState, target }: props) => {
   return (
-    <button onClick={() => updateFormState(target)} className="btn btn-square btn-outline rounded-lg absolute">
+    <button
+      onClick={() => updateFormState(target)}
+      className="btn btn-square btn-outline rounded-lg absolute top-8 left-8"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

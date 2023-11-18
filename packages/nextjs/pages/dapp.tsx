@@ -39,7 +39,7 @@ const LandingPage: NextPageWithLayout = () => {
       {/* Container */}
       <div className="flex flex-col items-center pt-10">
         {/* Form container */}
-        <div className="card w-5/6 p-10 bg-secondary shadow-xl">
+        <div className="card w-5/6 p-10 bg-secondary shadow-xl relative">
           {/* Initial Options */}
           {(formState === "start" || "login") && (
             <>
