@@ -13,13 +13,13 @@ const RegisterCompanyOrEmployee = ({ updateFormState }: props) => {
       <div className="flex items-center justify-center pt-10 space-x-5">
         <button
           onClick={() => updateFormState("register-company")}
-          className="btn card w-96 h-96 bg-primary hover:shadow-xl transition-shadow"
+          className="btn btn-primary card w-96 h-96 hover:shadow-xl transition-shadow"
         >
           <span className="flex flex-col text-4xl items-center pt-10">Register as Company</span>
         </button>
         <button
           onClick={() => updateFormState("register-employee")}
-          className="btn card w-96 h-96 bg-primary hover:shadow-xl transition-shadow"
+          className="btn btn-primary card w-96 h-96 hover:shadow-xl transition-shadow"
         >
           <span className="flex flex-col text-4xl items-center pt-10">Register as Employee</span>
         </button>

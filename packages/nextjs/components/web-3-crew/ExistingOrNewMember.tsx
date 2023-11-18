@@ -9,7 +9,7 @@ const ExistingOrNewMember = ({ updateFormState }: props) => {
     <div className="flex items-center justify-center pt-10 space-x-5">
       <button
         onClick={() => updateFormState("login")}
-        className="btn card w-96 h-96 bg-primary hover:shadow-xl transition-shadow"
+        className="btn btn-primary card w-96 h-96 hover:shadow-xl transition-shadow"
       >
         <span className="flex flex-col items-center pt-10">
           <span className="text-4xl">Existing</span>
@@ -19,7 +19,7 @@ const ExistingOrNewMember = ({ updateFormState }: props) => {
       </button>
       <button
         onClick={() => updateFormState("signup")}
-        className="btn card w-96 h-96 bg-primary hover:shadow-xl transition-shadow"
+        className="btn btn-primary card w-96 h-96 hover:shadow-xl transition-shadow"
       >
         <span className="flex flex-col items-center pt-10">
           <span className="text-4xl">New</span>
