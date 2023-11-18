@@ -10,27 +10,10 @@ import RegisterCompanyOrEmployee from "~~/components/web-3-crew/RegisterCompanyO
 export type FormSteps = "start" | "login" | "signup" | "register-company" | "register-employee";
 
 const LandingPage: NextPageWithLayout = () => {
-  const [formState, setFormState] = useState<string>("start");
+  const [formState, setFormState] = useState<FormSteps>("start");
 
   function updateFormState(value: FormSteps) {
-    switch (value) {
-      case "start":
-        setFormState(value);
-        break;
-      case "login":
-        setFormState(value);
-        break;
-      case "signup":
-        setFormState(value);
-        break;
-      case "register-company":
-        setFormState(value);
-        break;
-      case "register-employee":
-        setFormState(value);
-        break;
-      default:
-    }
+    setFormState(value);
   }
 
   return (
