@@ -6,31 +6,16 @@ import CleanLayout from "~~/components/layouts/CleanLayout";
 import ExistingOrNewMember from "~~/components/web-3-crew/ExistingOrNewMember";
 import LoginEmailOrWallet from "~~/components/web-3-crew/LoginEmailOrWallet";
 import RegisterCompanyOrEmployee from "~~/components/web-3-crew/RegisterCompanyOrEmployee";
+import RegisterCompanyForm from "~~/components/web-3-crew/forms/RegisterCompanyForm";
+import RegisterEmployeeForm from "~~/components/web-3-crew/forms/RegisterEmployeeForm";
 
 export type FormSteps = "start" | "login" | "signup" | "register-company" | "register-employee";
 
 const LandingPage: NextPageWithLayout = () => {
-  const [formState, setFormState] = useState<string>("start");
+  const [formState, setFormState] = useState<FormSteps>("start");
 
   function updateFormState(value: FormSteps) {
-    switch (value) {
-      case "start":
-        setFormState(value);
-        break;
-      case "login":
-        setFormState(value);
-        break;
-      case "signup":
-        setFormState(value);
-        break;
-      case "register-company":
-        setFormState(value);
-        break;
-      case "register-employee":
-        setFormState(value);
-        break;
-      default:
-    }
+    setFormState(value);
   }
 
   return (
@@ -39,9 +24,9 @@ const LandingPage: NextPageWithLayout = () => {
       {/* Container */}
       <div className="flex flex-col items-center pt-10">
         {/* Form container */}
-        <div className="card w-5/6 p-10 bg-secondary shadow-xl">
+        <div className="card w-5/6 p-10 bg-secondary shadow-xl relative">
           {/* Initial Options */}
-          {formState === "start" || "login" ? (
+          {(formState === "start" || formState === "login") && (
             <>
               <div className="px-5">
                 <h1 className="text-center mb-8 block text-4xl font-bold">CCIP Payroll</h1>
@@ -49,9 +34,10 @@ const LandingPage: NextPageWithLayout = () => {
               {formState === "start" && <ExistingOrNewMember updateFormState={updateFormState} />}
               {formState === "login" && <LoginEmailOrWallet updateFormState={updateFormState} />}
             </>
-          ) : null}
+          )}
+
           {/* Signup Options */}
-          {formState === "signup" ? (
+          {formState === "signup" && (
             <>
               <div className="px-5">
                 <h2 className="text-center mb-4 block text-3xl font-bold">
@@ -60,7 +46,31 @@ const LandingPage: NextPageWithLayout = () => {
               </div>
               <RegisterCompanyOrEmployee updateFormState={updateFormState} />
             </>
-          ) : null}
+          )}
+
+          {/* Register Company Form */}
+          {formState === "register-company" && (
+            <>
+              <div className="px-5">
+                <h2 className="text-center mb-4 block text-3xl font-bold">Enter Company Information</h2>
+              </div>
+              <div className="flex items-center justify-center w-full">
+                <RegisterCompanyForm updateFormState={updateFormState} />
+              </div>
+            </>
+          )}
+
+          {/* Register Employee Form */}
+          {formState === "register-employee" && (
+            <>
+              <div className="px-5">
+                <h2 className="text-center mb-4 block text-3xl font-bold">Enter Your Employee Details</h2>
+              </div>
+              <div className="flex items-center justify-center w-full">
+                <RegisterEmployeeForm updateFormState={updateFormState} />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
