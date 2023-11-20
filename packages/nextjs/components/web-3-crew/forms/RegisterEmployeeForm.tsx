@@ -60,7 +60,7 @@ const RegisterEmployeeForm = ({ updateFormState }: props) => {
           </select>
         </div> */}
 
-        <button type="submit" className="btn-block btn-square btn-primary rounded-lg mt-5 max-w-lg">
+        <button type="submit" className="btn-block btn-square btn-primary rounded-lg mt-5 max-w-md">
           Create Employee Account
         </button>
       </form>
