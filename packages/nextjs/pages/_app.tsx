@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import type { AppProps } from "next/app";
+import { wrapper } from "../components/dash-wind/app/store";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { NextPage } from "next";
@@ -39,7 +40,11 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     setIsDarkTheme(isDarkMode);
   }, [isDarkMode]);
 
+  // Next.js get page layout
   const getLayout = Component.getLayout || (page => page);
+
+  // next-redux-wrapper for adding reduxToolkit to Next.js app
+  const WrappedComponent = wrapper.withRedux(getLayout(<Component {...pageProps} />));
 
   return (
     <WagmiConfig config={wagmiConfig}>
@@ -49,7 +54,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         avatar={BlockieAvatar}
         theme={isDarkTheme ? darkTheme() : lightTheme()}
       >
-        <div className="flex flex-col min-h-screen">{getLayout(<Component {...pageProps} />)}</div>
+        <div className="flex flex-col min-h-screen">{WrappedComponent(pageProps)}</div>
         <Toaster />
       </RainbowKitProvider>
     </WagmiConfig>

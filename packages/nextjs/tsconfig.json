@@ -16,8 +16,9 @@
     "incremental": true,
     "paths": {
       "~~/*": ["./*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./components/dash-wind/types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
   "exclude": ["node_modules"]
 }
