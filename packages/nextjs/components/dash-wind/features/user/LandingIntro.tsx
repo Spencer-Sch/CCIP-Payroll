@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import TemplatePointers from "./components/TemplatePointers";
 
 function LandingIntro() {
@@ -7,12 +7,12 @@ function LandingIntro() {
       <div className="hero-content py-12">
         <div className="max-w-md">
           <h1 className="text-3xl text-center font-bold ">
-            <Image src="/logo192.png" className="w-12 inline-block mr-2 mask mask-circle" alt="dashwind-logo" />
+            <img src="/logo192.png" className="w-12 inline-block mr-2 mask mask-circle" alt="dashwind-logo" />
             DashWind
           </h1>
 
           <div className="text-center mt-12">
-            <Image src="./intro.png" alt="Dashwind Admin Template" className="w-48 inline-block" />
+            <img src="./intro.png" alt="Dashwind Admin Template" className="w-48 inline-block" />
           </div>
 
           {/* Importing pointers component */}

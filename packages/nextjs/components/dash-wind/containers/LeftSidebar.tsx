@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import routes from "../routes/sidebar";
@@ -26,7 +26,7 @@ function LeftSidebar() {
         <li className="mb-2 font-semibold text-xl">
           <Link href={"/app/welcome"}>
             <a>
-              <Image className="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo" />
+              <img className="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo" />
               DashWind
             </a>
           </Link>{" "}

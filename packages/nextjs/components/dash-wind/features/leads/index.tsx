@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { useMyDispatch } from "../../../../hooks/useMyDispatch";
 import TitleCard from "../../components/Cards/TitleCard";
 import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
@@ -80,7 +80,7 @@ function Leads() {
                       <div className="flex items-center space-x-3">
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
-                            <Image src={l.avatar} alt="Avatar" />
+                            <img src={l.avatar} alt="Avatar" />
                           </div>
                         </div>
                         <div>

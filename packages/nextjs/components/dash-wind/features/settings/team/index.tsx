@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import TitleCard from "../../../components/Cards/TitleCard";
 import { showNotification } from "../../common/headerSlice";
 import moment from "moment";
@@ -118,7 +118,7 @@ function Team() {
                       <div className="flex items-center space-x-3">
                         <div className="avatar">
                           <div className="mask mask-circle w-12 h-12">
-                            <Image src={l.avatar} alt="Avatar" />
+                            <img src={l.avatar} alt="Avatar" />
                           </div>
                         </div>
                         <div>

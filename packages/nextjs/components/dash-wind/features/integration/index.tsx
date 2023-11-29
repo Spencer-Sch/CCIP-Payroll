@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import TitleCard from "../../components/Cards/TitleCard";
 import { showNotification } from "../common/headerSlice";
 import { useDispatch } from "react-redux";
@@ -79,7 +79,7 @@ function Integration() {
           return (
             <TitleCard key={k} title={i.name} topMargin={"mt-2"}>
               <p className="flex">
-                <Image alt="icon" src={i.icon} className="w-12 h-12 inline-block mr-4" />
+                <img alt="icon" src={i.icon} className="w-12 h-12 inline-block mr-4" />
                 {i.description}
               </p>
               <div className="mt-6 text-right">

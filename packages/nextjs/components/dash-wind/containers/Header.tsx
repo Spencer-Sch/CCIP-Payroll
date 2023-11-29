@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { HeaderRootState } from "../features/common/headerSlice";
@@ -92,7 +92,7 @@ function Header() {
           <div className="dropdown dropdown-end ml-4">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <Image src="https://placeimg.com/80/80/people" alt="profile" />
+                <img src="https://placeimg.com/80/80/people" alt="profile" />
               </div>
             </label>
             <ul
