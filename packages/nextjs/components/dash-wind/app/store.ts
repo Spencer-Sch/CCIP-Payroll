@@ -2,8 +2,10 @@ import headerSlice from "../features/common/headerSlice";
 import modalSlice from "../features/common/modalSlice";
 import rightDrawerSlice from "../features/common/rightDrawerSlice";
 import leadsSlice from "../features/leads/leadSlice";
-import { Reducer, configureStore } from "@reduxjs/toolkit";
+import { Reducer, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { Action } from "redux";
 
 interface CombinedReducer {
   header: Reducer<{
@@ -48,6 +50,13 @@ const store = configureStore({
 // const makeStore = context => store;
 const makeStore = () => store;
 
-export const wrapper = createWrapper(makeStore);
+export type MyStore = ReturnType<typeof makeStore>;
+export type MyState = ReturnType<MyStore["getState"]>;
+export type MyDispatch = MyStore["dispatch"];
+// export type MyDispatch = typeof store.dispatch;
+export type MyThunk<ReturnType = void> = ThunkAction<ReturnType, MyState, unknown, Action>;
 
-export type MyDispatch = typeof store.dispatch;
+export const useMyDispatch = () => useDispatch<MyDispatch>();
+export const useMySelector: TypedUseSelectorHook<MyState> = useSelector;
+
+export const wrapper = createWrapper<MyStore>(makeStore);
