@@ -28,7 +28,7 @@ function Register() {
       // Call API to check user credentials and save token in localstorage
       localStorage.setItem("token", "DumyTokenHere");
       setLoading(false);
-      window.location.href = "/app/welcome";
+      window.location.href = "/dapp/welcome";
     }
   };
 
