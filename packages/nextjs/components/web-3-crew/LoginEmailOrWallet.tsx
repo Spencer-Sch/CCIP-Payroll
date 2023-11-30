@@ -1,5 +1,5 @@
 import BackButton from "./buttons/BackButton";
-import { FormSteps } from "~~/pages/dapp";
+import { FormSteps } from "~~/components/web-3-crew/types/FormSteps";
 
 interface props {
   updateFormState: (value: FormSteps) => void;
