@@ -6,12 +6,12 @@ import { RIGHT_DRAWER_TYPES } from "../../utils/globalConstantUtil";
 import { showNotification } from "../common/headerSlice";
 import { openRightDrawer } from "../common/rightDrawerSlice";
 import moment from "moment";
-import { useDispatch } from "react-redux";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 const INITIAL_EVENTS = CALENDAR_INITIAL_EVENTS;
 
 function Calendar() {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const [events, setEvents] = useState(INITIAL_EVENTS);
 

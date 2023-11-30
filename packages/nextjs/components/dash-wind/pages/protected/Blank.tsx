@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { setPageTitle } from "../../features/common/headerSlice";
-import { useDispatch } from "react-redux";
 import DocumentIcon from "@heroicons/react/24/solid/DocumentIcon";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 function InternalPage() {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   useEffect(() => {
     dispatch(setPageTitle({ title: "Page Title" }));

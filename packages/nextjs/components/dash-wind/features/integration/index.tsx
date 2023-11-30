@@ -2,7 +2,7 @@ import { useState } from "react";
 // import Image from "next/image";
 import TitleCard from "../../components/Cards/TitleCard";
 import { showNotification } from "../common/headerSlice";
-import { useDispatch } from "react-redux";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 const INITIAL_INTEGRATION_LIST = [
   {
@@ -55,7 +55,7 @@ const INITIAL_INTEGRATION_LIST = [
 ];
 
 function Integration() {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const [integrationList, setIntegrationList] = useState(INITIAL_INTEGRATION_LIST);
 

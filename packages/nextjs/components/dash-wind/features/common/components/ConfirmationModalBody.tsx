@@ -2,7 +2,7 @@ import { CONFIRMATION_MODAL_CLOSE_TYPES } from "../../../utils/globalConstantUti
 import { deleteLead } from "../../leads/leadSlice";
 import { showNotification } from "../headerSlice";
 // import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 interface props {
   extraObject: Record<string, any>;
@@ -10,7 +10,7 @@ interface props {
 }
 
 function ConfirmationModalBody({ extraObject, closeModal }: props) {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   // const { message, type, _id, index } = extraObject;
   const { message, type, index } = extraObject;

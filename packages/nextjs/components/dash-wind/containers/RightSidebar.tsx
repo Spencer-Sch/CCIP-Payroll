@@ -2,14 +2,14 @@ import CalendarEventsBodyRightDrawer from "../features/calendar/CalendarEventsBo
 import NotificationBodyRightDrawer from "../features/common/components/NotificationBodyRightDrawer";
 import { RightDrawerRootState, closeRightDrawer } from "../features/common/rightDrawerSlice";
 import { RIGHT_DRAWER_TYPES } from "../utils/globalConstantUtil";
-import { useDispatch, useSelector } from "react-redux";
 import XMarkIcon from "@heroicons/react/24/solid/XMarkIcon";
+import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
 function RightSidebar() {
-  const { isOpen, bodyType, extraObject, header }: RightDrawerRootState["rightDrawer"] = useSelector(
-    (state: RightDrawerRootState) => state.rightDrawer,
+  const { isOpen, bodyType, extraObject, header }: RightDrawerRootState["rightDrawer"] = useMySelector(
+    (state: MyState) => state.rightDrawer,
   );
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const close = () => {
     dispatch(closeRightDrawer());

@@ -5,7 +5,7 @@ import SearchBar from "../../components/Input/SearchBar";
 import { RECENT_TRANSACTIONS } from "../../utils/dummyData";
 // import { showNotification } from "../common/headerSlice";
 import moment from "moment";
-// import { useDispatch, useSelector } from "react-redux";
+// import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 import FunnelIcon from "@heroicons/react/24/outline/FunnelIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 

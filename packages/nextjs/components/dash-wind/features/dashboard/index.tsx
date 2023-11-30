@@ -9,11 +9,11 @@ import DoughnutChart from "./components/DoughnutChart";
 import LineChart from "./components/LineChart";
 import PageStats from "./components/PageStats";
 import UserChannels from "./components/UserChannels";
-import { useDispatch } from "react-redux";
 import CircleStackIcon from "@heroicons/react/24/outline/CircleStackIcon";
 import CreditCardIcon from "@heroicons/react/24/outline/CreditCardIcon";
 import UserGroupIcon from "@heroicons/react/24/outline/UserGroupIcon";
 import UsersIcon from "@heroicons/react/24/outline/UsersIcon";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 const statsData = [
   { title: "New Users", value: "34.7k", icon: <UserGroupIcon className="w-8 h-8" />, description: "↗︎ 2300 (22%)" },
@@ -33,7 +33,7 @@ const statsData = [
 ];
 
 function Dashboard() {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const updateDashboardPeriod = (newRange: DateValue) => {
     // Dashboard range changed, write code to refresh your values

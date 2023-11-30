@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { setPageTitle } from "../../features/common/headerSlice";
 import TemplatePointers from "../../features/user/components/TemplatePointers";
-import { useDispatch } from "react-redux";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 function InternalPage() {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   useEffect(() => {
     dispatch(setPageTitle({ title: "" }));

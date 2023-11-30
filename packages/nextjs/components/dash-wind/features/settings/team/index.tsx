@@ -3,10 +3,10 @@ import { useState } from "react";
 import TitleCard from "../../../components/Cards/TitleCard";
 import { showNotification } from "../../common/headerSlice";
 import moment from "moment";
-import { useDispatch } from "react-redux";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 const TopSideButtons = () => {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const addNewTeamMember = () => {
     dispatch(showNotification({ message: "Add New Member clicked", status: 1 }));

@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 // import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { HeaderRootState } from "../features/common/headerSlice";
 import { openRightDrawer } from "../features/common/rightDrawerSlice";
 import { RIGHT_DRAWER_TYPES } from "../utils/globalConstantUtil";
-import { useDispatch, useSelector } from "react-redux";
 import { themeChange } from "theme-change";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
+import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
 function Header() {
-  const dispatch = useDispatch();
-  const { noOfNotifications, pageTitle } = useSelector((state: HeaderRootState) => state.header);
-  const [currentTheme, setCurrentTheme] = useState(localStorage.getItem("theme"));
+  const dispatch = useMyDispatch();
+  const { noOfNotifications, pageTitle } = useMySelector((state: MyState) => state.header);
+  const [currentTheme, setCurrentTheme] = useState(
+    typeof window !== "undefined" ? localStorage.getItem("theme") : null,
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -36,7 +37,9 @@ function Header() {
   };
 
   function logoutUser() {
-    localStorage.clear();
+    if (typeof window !== "undefined") {
+      localStorage.clear();
+    }
     router.push("/");
   }
 

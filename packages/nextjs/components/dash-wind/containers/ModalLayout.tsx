@@ -3,13 +3,13 @@ import ConfirmationModalBody from "../features/common/components/ConfirmationMod
 import { ModalRootState, closeModal } from "../features/common/modalSlice";
 import AddLeadModalBody from "../features/leads/components/AddLeadModalBody";
 import { MODAL_BODY_TYPES } from "../utils/globalConstantUtil";
-import { useDispatch, useSelector } from "react-redux";
+import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
 function ModalLayout() {
-  const { isOpen, bodyType, size, extraObject, title }: ModalRootState["modal"] = useSelector(
-    (state: ModalRootState) => state.modal,
+  const { isOpen, bodyType, size, extraObject, title }: ModalRootState["modal"] = useMySelector(
+    (state: MyState) => state.modal,
   );
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const close = () => {
     dispatch(closeModal());

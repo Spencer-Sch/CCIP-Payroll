@@ -6,10 +6,10 @@ import ToggleInput from "../../../components/Input/ToggleInput";
 import { UpdateFormValues } from "../../../types/FormTypes";
 import { showNotification } from "../../common/headerSlice";
 // import moment from "moment";
-import { useDispatch } from "react-redux";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 function ProfileSettings() {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   // Call API to update profile settings changes
   const updateProfile = () => {

@@ -3,7 +3,7 @@ import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
 import { addNewLead } from "../leadSlice";
-import { useDispatch } from "react-redux";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 import { UpdateFormValues } from "~~/components/dash-wind/types/FormTypes";
 
 interface props {
@@ -18,7 +18,7 @@ const INITIAL_LEAD_OBJ = {
 
 // function AddLeadModalBody({ closeModal, extraObject }) {
 function AddLeadModalBody({ closeModal }: props) {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
   //   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);

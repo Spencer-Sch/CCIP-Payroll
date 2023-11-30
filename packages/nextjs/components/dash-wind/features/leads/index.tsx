@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 // import Image from "next/image";
-import { useMyDispatch } from "../../../../hooks/useMyDispatch";
 import TitleCard from "../../components/Cards/TitleCard";
 import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 // import { showNotification } from "../common/headerSlice";
 import { openModal } from "../common/modalSlice";
-import { Lead, LeadRootState, getLeadsContent } from "./leadSlice";
+import { Lead, getLeadsContent } from "./leadSlice";
 import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
+import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
 const TopSideButtons = () => {
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const openAddNewLeadModal = () => {
     dispatch(openModal({ title: "Add New Lead", bodyType: MODAL_BODY_TYPES.LEAD_ADD_NEW }));
@@ -27,7 +26,7 @@ const TopSideButtons = () => {
 };
 
 function Leads() {
-  const { leads } = useSelector((state: LeadRootState) => state.leads);
+  const { leads } = useMySelector((state: MyState) => state.lead);
   const dispatch = useMyDispatch();
 
   useEffect(() => {

@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
-import { HeaderRootState, removeNotificationMessage } from "../features/common/headerSlice";
+import { removeNotificationMessage } from "../features/common/headerSlice";
 import LeftSidebar from "./LeftSidebar";
 import ModalLayout from "./ModalLayout";
 // import PageContent from "./PageContent";
 import RightSidebar from "./RightSidebar";
 // import { NotificationContainer, NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
-import { useDispatch, useSelector } from "react-redux";
+import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
 const NotificationContainer = dynamic(
   () => import("react-notifications").then(mod => mod.NotificationContainer),
@@ -20,8 +20,8 @@ const NotificationManager = dynamic(
 );
 
 function Layout() {
-  const dispatch = useDispatch();
-  const { newNotificationMessage, newNotificationStatus } = useSelector((state: HeaderRootState) => state.header);
+  const dispatch = useMyDispatch();
+  const { newNotificationMessage, newNotificationStatus } = useMySelector((state: MyState) => state.header);
 
   useEffect(() => {
     if (newNotificationMessage !== "") {

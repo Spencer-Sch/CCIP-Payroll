@@ -3,14 +3,14 @@
 // import routes from "../routes";
 // import Header from "./Header";
 // import SuspenseContent from "./SuspenseContent";
-// import { useSelector } from "react-redux";
+// import { MyState, useMySelector } from"~~/components/dash-wind/app/store";
 // import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 // const Page404 = lazy(() => import("../pages/protected/404"));
 
 // function PageContent() {
 //   const mainContentRef = useRef(null);
-//   const { pageTitle } = useSelector(state => state.header);
+//   const { pageTitle } = useMySelector((state: MyState) => state.header);
 
 //   // Scroll back to top on new page load
 //   useEffect(() => {
