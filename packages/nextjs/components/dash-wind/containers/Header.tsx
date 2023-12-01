@@ -9,6 +9,7 @@ import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
+import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
 function Header() {
@@ -94,8 +95,8 @@ function Header() {
           {/* Profile icon, opening menu on click */}
           <div className="dropdown dropdown-end ml-4">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" alt="profile" />
+              <div className="flex justify-center items-center rounded-full">
+                <UserIcon className="h-6 w-6 inline-block" />
               </div>
             </label>
             <ul
@@ -103,13 +104,13 @@ function Header() {
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li className="justify-between">
-                <Link href="/app/settings-profile">
+                <Link href="/dapp/settings-profile">
                   Profile Settings
                   <span className="badge">New</span>
                 </Link>
               </li>
               <li className="">
-                <Link href="/app/settings-billing">Bill History</Link>
+                <Link href="/dapp/settings-billing">Bill History</Link>
               </li>
               <div className="divider mt-0 mb-0"></div>
               <li>
