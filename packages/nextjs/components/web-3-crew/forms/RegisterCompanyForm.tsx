@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import BackButton from "../buttons/BackButton";
-import { FormSteps } from "~~/pages/dapp";
+import { FormSteps } from "~~/components/web-3-crew/types/FormSteps";
 
 interface props {
   updateFormState: (value: FormSteps) => void;
@@ -67,7 +67,7 @@ const RegisterCompanyForm = ({ updateFormState }: props) => {
           <input type="text" placeholder="0x..." className="input input-bordered w-full rounded-md max-w-md" />
         </div>
 
-        <button type="submit" className="btn-block btn-square btn-primary rounded-lg mt-5 max-w-lg">
+        <button type="submit" className="btn-block btn-square btn-primary rounded-lg mt-5 max-w-md">
           Create Company Account
         </button>
       </form>

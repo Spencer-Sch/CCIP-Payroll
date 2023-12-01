@@ -20,7 +20,7 @@ const LandingPage: NextPageWithLayout = () => {
             <span className="block text-3xl font-bold">Web3Crew Constellation Project</span>
           </h2>
         </div>
-        <Link href="/dapp" className="btn btn-primary rounded-lg">
+        <Link href="/login" className="btn btn-primary rounded-lg">
           Launch Dapp
         </Link>
       </div>

@@ -8,8 +8,7 @@ import LoginEmailOrWallet from "~~/components/web-3-crew/LoginEmailOrWallet";
 import RegisterCompanyOrEmployee from "~~/components/web-3-crew/RegisterCompanyOrEmployee";
 import RegisterCompanyForm from "~~/components/web-3-crew/forms/RegisterCompanyForm";
 import RegisterEmployeeForm from "~~/components/web-3-crew/forms/RegisterEmployeeForm";
-
-export type FormSteps = "start" | "login" | "signup" | "register-company" | "register-employee";
+import { FormSteps } from "~~/components/web-3-crew/types/FormSteps";
 
 const LandingPage: NextPageWithLayout = () => {
   const [formState, setFormState] = useState<FormSteps>("start");

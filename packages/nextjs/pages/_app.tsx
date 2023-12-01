@@ -5,8 +5,12 @@ import "@rainbow-me/rainbowkit/styles.css";
 import type { NextPage } from "next";
 import NextNProgress from "nextjs-progressbar";
 import { Toaster } from "react-hot-toast";
+// NEW
+import { Provider } from "react-redux";
 import { useDarkMode } from "usehooks-ts";
 import { WagmiConfig } from "wagmi";
+// NEW
+import { wrapper } from "~~/components/dash-wind/app/store";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
@@ -41,6 +45,8 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   const getLayout = Component.getLayout || (page => page);
 
+  const { store, props } = wrapper.useWrappedStore(pageProps);
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <NextNProgress />
@@ -49,7 +55,10 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         avatar={BlockieAvatar}
         theme={isDarkTheme ? darkTheme() : lightTheme()}
       >
-        <div className="flex flex-col min-h-screen">{getLayout(<Component {...pageProps} />)}</div>
+        <Provider store={store}>
+          <div className="flex flex-col min-h-screen">{getLayout(<Component {...props.pageProps} />)}</div>
+          {/* <div className="flex flex-col min-h-screen">{getLayout(<Component {...pageProps} />)}</div> */}
+        </Provider>
         <Toaster />
       </RainbowKitProvider>
     </WagmiConfig>
