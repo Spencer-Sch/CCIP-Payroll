@@ -31,7 +31,7 @@ function Leads() {
 
   useEffect(() => {
     dispatch(getLeadsContent());
-  }, []);
+  }, [dispatch]);
 
   const getDummyStatus = (index: number) => {
     if (index % 5 === 0) return <div className="badge">Not Interested</div>;

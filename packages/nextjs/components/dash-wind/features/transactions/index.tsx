@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 // import Image from "next/image";
 import TitleCard from "../../components/Cards/TitleCard";
 import SearchBar from "../../components/Input/SearchBar";
@@ -25,11 +25,11 @@ const TopSideButtons = ({ removeFilter, applyFilter, applySearch }: TopSideButto
     setFilterParam(params);
   };
 
-  const removeAppliedFilter = () => {
+  const removeAppliedFilter = useCallback(() => {
     removeFilter();
     setFilterParam("");
     setSearchText("");
-  };
+  }, [removeFilter]);
 
   useEffect(() => {
     if (searchText == "") {
@@ -37,7 +37,7 @@ const TopSideButtons = ({ removeFilter, applyFilter, applySearch }: TopSideButto
     } else {
       applySearch(searchText);
     }
-  }, [searchText]);
+  }, [applySearch, removeAppliedFilter, searchText]);
 
   return (
     <div className="inline-block float-right">
