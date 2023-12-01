@@ -29,7 +29,7 @@ function Layout() {
       if (newNotificationStatus === 0) (NotificationManager as any).error(newNotificationMessage, "Error");
       dispatch(removeNotificationMessage());
     }
-  }, [newNotificationMessage]);
+  }, [dispatch, newNotificationMessage, newNotificationStatus]);
 
   return (
     <>

@@ -8,7 +8,7 @@ function InternalPage() {
 
   useEffect(() => {
     dispatch(setPageTitle({ title: "Page Title" }));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="hero h-4/5 bg-base-200">

@@ -29,7 +29,7 @@ function SidebarSubmenu({ submenu, name, icon, className }: SidebarSubmenuProps)
       })[0]
     )
       setIsExpanded(true);
-  }, []);
+  }, [router.pathname, submenu]);
 
   return (
     <div className="flex-col">
