@@ -15,9 +15,7 @@ function LeftSidebar() {
 
   return (
     <>
-      {/* <h1>HELLOW FROM LEFT SIDEBAR</h1> */}
       <div className="drawer-side">
-        {/* <div className=""> */}
         <label htmlFor="left-sidebar-drawer" className="drawer-overlay"></label>
         <ul className="menu pt-2 w-80 bg-base-100 text-base-content">
           {/* <button
@@ -29,10 +27,8 @@ function LeftSidebar() {
 
           <li className="mb-2 font-semibold text-xl">
             <Link href={"/app/welcome"}>
-              {/* <a> */}
               <img className="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo" />
               DashWind
-              {/* </a> */}
             </Link>{" "}
           </li>
           {routes.map((route, k) => {
