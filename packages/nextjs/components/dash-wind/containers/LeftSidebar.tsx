@@ -26,7 +26,7 @@ function LeftSidebar() {
           </button> */}
 
           <li className="mb-2 font-semibold text-xl">
-            <Link href={"/app/welcome"}>
+            <Link href={"/dapp/welcome"}>
               <img className="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo" />
               DashWind
             </Link>{" "}
