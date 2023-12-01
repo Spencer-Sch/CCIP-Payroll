@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect } from "react";
 // import Image from "next/image";
 import TitleCard from "../../components/Cards/TitleCard";
