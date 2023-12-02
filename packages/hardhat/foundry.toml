@@ -1,0 +1,28 @@
+[profile.default]
+src = 'contracts'
+out = 'out'
+libs = ['node_modules', 'lib']
+test = 'test'
+cache_path  = 'cache_forge'
+solc = "0.8.19"
+
+# packages/hardhat/node_modules/@openzeppelin
+
+remappings = [
+    "ds-test/=lib/forge-std/lib/ds-test/src/",
+    "forge-std/=lib/forge-std/src/",
+    "@openzeppelin/=node_modules/@openzeppelin/",
+    "@solmate-utils/=node_modules/solmate/src/utils/",
+    "@chainlink/contracts/=node_modules/@chainlink/contracts",
+    "@chainlink/contracts-ccip/=node_modules/@chainlink/contracts-ccip",
+]
+
+[rpc_endpoints]
+fuji = "${AVALANCHE_FUJI_URL}"
+
+[etherscan]
+snowtrace = { key = "${SNOWTRACE_API}" }
+
+
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
