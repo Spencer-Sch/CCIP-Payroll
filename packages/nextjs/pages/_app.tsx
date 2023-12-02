@@ -5,13 +5,13 @@ import "@rainbow-me/rainbowkit/styles.css";
 import type { NextPage } from "next";
 import NextNProgress from "nextjs-progressbar";
 import { Toaster } from "react-hot-toast";
-// NEW
 import { Provider } from "react-redux";
 import { useDarkMode } from "usehooks-ts";
 import { WagmiConfig } from "wagmi";
-// NEW
+import { web3AuthInit, web3auth } from "~~/auth/web3auth";
 import { wrapper } from "~~/components/dash-wind/app/store";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
+import WatchPathname from "~~/components/web-3-crew/watchPathname";
 import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
@@ -43,12 +43,33 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     setIsDarkTheme(isDarkMode);
   }, [isDarkMode]);
 
+  // Web3Auth
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await web3AuthInit();
+        // TODO
+        // set Provider state
+        // ...
+        if (web3auth.connected) {
+          // TODO
+          // set logged In state
+          // ...
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    init();
+  }, []);
+
   const getLayout = Component.getLayout || (page => page);
 
   const { store, props } = wrapper.useWrappedStore(pageProps);
 
   return (
     <WagmiConfig config={wagmiConfig}>
+      <WatchPathname />
       <NextNProgress />
       <RainbowKitProvider
         chains={appChains.chains}

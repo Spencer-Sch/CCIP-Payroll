@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import InputText from "../../components/Input/InputText";
 import ErrorText from "../../components/Typography/ErrorText";
 import { UpdateFormValues } from "../../types/FormTypes";
 import LandingIntro from "./LandingIntro";
+import { web3auth } from "~~/auth/web3auth";
 
 function Login() {
   const INITIAL_LOGIN_OBJ = {
@@ -14,6 +16,24 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginObj, setLoginObj] = useState(INITIAL_LOGIN_OBJ);
+
+  const router = useRouter();
+
+  // Web3Auth
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await web3auth.connect();
+        // TODO
+        // set provider state (?) already being done in _app.tsx
+        // set logged in state to true
+        router.push("/dapp/dashboard");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    init();
+  });
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,7 +46,8 @@ function Login() {
       // Call API to check user credentials and save token in localstorage
       localStorage.setItem("token", "DumyTokenHere");
       setLoading(false);
-      window.location.href = "/dapp/welcome";
+      router.push("/dapp/welcome");
+      // window.location.href = "/dapp/welcome";
     }
   };
 

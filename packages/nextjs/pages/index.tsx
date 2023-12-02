@@ -1,10 +1,22 @@
 import { ReactElement } from "react";
-import Link from "next/link";
+// import Link from "next/link";
+import { useRouter } from "next/router";
 import type { NextPageWithLayout } from "./_app";
+import { web3auth } from "~~/auth/web3auth";
 import { MetaHeader } from "~~/components/MetaHeader";
 import CleanLayout from "~~/components/layouts/CleanLayout";
 
 const LandingPage: NextPageWithLayout = () => {
+  const router = useRouter();
+  function launchDapp() {
+    if (web3auth.connected) {
+      // redirect to dashboard if logged in
+      router.push("/dapp/dashboard");
+      return;
+    }
+    // redirect to login if not connected
+    router.push("/login");
+  }
   return (
     <>
       <MetaHeader /> {/* Look into MetaHeader - should it be moved to _app.tsx ??? */}
@@ -20,9 +32,12 @@ const LandingPage: NextPageWithLayout = () => {
             <span className="block text-3xl font-bold">Web3Crew Constellation Project</span>
           </h2>
         </div>
-        <Link href="/login" className="btn btn-primary rounded-lg">
+        <button onClick={launchDapp} className="btn btn-primary rounded-lg">
           Launch Dapp
-        </Link>
+        </button>
+        {/* <Link href="/login" className="btn btn-primary rounded-lg">
+          Launch Dapp
+        </Link> */}
       </div>
     </>
   );
