@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {Test, console2} from "forge-std/Test.sol";
 import {console2} from "forge-std/console2.sol";
 import {Payroll} from "../contracts/Payroll.sol";
-import {ERC20Mock} from "@openzeppelin/contracts-v0.7/mocks/ERC20Mock.sol";
+import {ERC20Mock} from "@openzeppelin/contracts/mocks/ERC20Mock.sol";
 import {TokenTransferor} from "../contracts/TokenTransferor.sol";
 
 contract PayRollTest is Test {

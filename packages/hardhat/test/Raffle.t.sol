@@ -4,9 +4,9 @@ pragma solidity 0.8.19;
 import {Test, console2} from "forge-std/Test.sol";
 import {console2} from "forge-std/console2.sol";
 import {RaffleNoVrf} from "../contracts/RaffleNoVrf.sol";
-import {ERC20Mock} from "@openzeppelin/contracts-v0.7/mocks/ERC20Mock.sol";
-import {ERC721Mock} from "@openzeppelin/contracts-v0.7/mocks/ERC721Mock.sol";
-import {ERC1155Mock} from "@openzeppelin/contracts-v0.7/mocks/ERC1155Mock.sol";
+import {ERC20Mock} from "@openzeppelin/contracts/mocks/ERC20Mock.sol";
+import {ERC721Mock} from "@openzeppelin/contracts/mocks/ERC721Mock.sol";
+import {ERC1155Mock} from "@openzeppelin/contracts/mocks/ERC1155Mock.sol";
 import {TokenTransferor} from "../contracts/TokenTransferor.sol";
 
 contract RaffleTest is Test {
