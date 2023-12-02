@@ -9,8 +9,9 @@ import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
-import UserIcon from "@heroicons/react/24/outline/UserIcon";
+// import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
+import { Address } from "~~/components/web-3-crew/Address";
 
 function Header() {
   const dispatch = useMyDispatch();
@@ -94,6 +95,39 @@ function Header() {
 
           {/* Profile icon, opening menu on click */}
           <div className="dropdown dropdown-end ml-4">
+            <label tabIndex={0} className="btn btn-ghost">
+              <div className="flex justify-center items-center">
+                {/* Wallet Address Display */}
+                <Address
+                  address="0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770"
+                  disableAddressLink={true}
+                  format="short"
+                  size="base"
+                />
+              </div>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li className="justify-between">
+                <Link href="/dapp/settings-profile">
+                  Profile Settings
+                  <span className="badge">New</span>
+                </Link>
+              </li>
+              <li className="">
+                <Link href="/dapp/settings-billing">Bill History</Link>
+              </li>
+              <div className="divider mt-0 mb-0"></div>
+              <li>
+                <a onClick={logoutUser}>Logout</a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Profile icon, opening menu on click */}
+          {/* <div className="dropdown dropdown-end ml-4">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="flex justify-center items-center rounded-full">
                 <UserIcon className="h-6 w-6 inline-block" />
@@ -117,7 +151,7 @@ function Header() {
                 <a onClick={logoutUser}>Logout</a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
