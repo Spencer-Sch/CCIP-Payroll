@@ -616,7 +616,11 @@ address public automationAddress;
             return true;
         }
     }
-    
+
+    function getOwner() public view returns (address){
+        return owner();
+    }   
+
     function getEmployeePaymentSplits(address _employeeAddress) public view returns (PaymentSplit memory){
         return employees[_employeeAddress].paymentSplits;
     }
