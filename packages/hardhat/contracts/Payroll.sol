@@ -609,6 +609,14 @@ address public automationAddress;
         return employees[_employeeAddress];
     }
 
+    function doesEmployeeExist(address _employeeAddress) public view returns (bool){
+        if (employees[_employeeAddress].employeeId == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     function getEmployeePaymentSplits(address _employeeAddress) public view returns (PaymentSplit memory){
         return employees[_employeeAddress].paymentSplits;
     }
