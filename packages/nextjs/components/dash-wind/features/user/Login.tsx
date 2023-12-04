@@ -5,7 +5,9 @@ import InputText from "../../components/Input/InputText";
 import ErrorText from "../../components/Typography/ErrorText";
 import { UpdateFormValues } from "../../types/FormTypes";
 import LandingIntro from "./LandingIntro";
+import { setAuthProvider, setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 function Login() {
   const INITIAL_LOGIN_OBJ = {
@@ -18,15 +20,17 @@ function Login() {
   const [loginObj, setLoginObj] = useState(INITIAL_LOGIN_OBJ);
 
   const router = useRouter();
+  const dispatch = useMyDispatch();
 
   // Web3Auth
   useEffect(() => {
     const init = async () => {
       try {
-        await web3auth.connect();
-        // TODO
-        // set provider state (?) already being done in _app.tsx
-        // set logged in state to true
+        const web3authProvider = await web3auth.connect();
+        dispatch(setAuthProvider({ provider: web3authProvider }));
+        if (web3auth.connected) {
+          dispatch(setIsConnected({ isConnected: true }));
+        }
         router.push("/dapp/dashboard");
       } catch (error) {
         console.error(error);

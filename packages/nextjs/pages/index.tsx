@@ -1,13 +1,25 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 // import Link from "next/link";
 import { useRouter } from "next/router";
 import type { NextPageWithLayout } from "./_app";
+import { setAuthProvider, setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 import { MetaHeader } from "~~/components/MetaHeader";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 import CleanLayout from "~~/components/layouts/CleanLayout";
 
 const LandingPage: NextPageWithLayout = () => {
   const router = useRouter();
+  const dispatch = useMyDispatch();
+
+  useEffect(() => {
+    dispatch(setAuthProvider({ provider: web3auth.provider }));
+
+    if (web3auth.connected) {
+      dispatch(setIsConnected({ isConnected: true }));
+    }
+  }, [dispatch]);
+
   function launchDapp() {
     if (web3auth.connected) {
       // redirect to dashboard if logged in

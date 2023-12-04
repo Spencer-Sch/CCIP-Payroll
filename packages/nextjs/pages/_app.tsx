@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { useDarkMode } from "usehooks-ts";
 import { WagmiConfig } from "wagmi";
-import { web3AuthInit, web3auth } from "~~/auth/web3auth";
+import { web3AuthInit } from "~~/auth/web3auth";
 import { wrapper } from "~~/components/dash-wind/app/store";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import WatchPathname from "~~/components/web-3-crew/watchPathname";
@@ -48,14 +48,6 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     const init = async () => {
       try {
         await web3AuthInit();
-        // TODO
-        // set Provider state
-        // ...
-        if (web3auth.connected) {
-          // TODO
-          // set logged In state
-          // ...
-        }
       } catch (error) {
         console.error(error);
       }

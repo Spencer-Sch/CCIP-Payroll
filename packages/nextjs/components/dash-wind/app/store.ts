@@ -6,6 +6,7 @@ import { Reducer, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { Action } from "redux";
+import authSlice, { AuthProvider } from "~~/auth/authSlice";
 
 interface CombinedReducer {
   header: Reducer<{
@@ -31,6 +32,10 @@ interface CombinedReducer {
     isLoading: boolean;
     leads: never[];
   }>;
+  auth: Reducer<{
+    isConnected: boolean;
+    provider: AuthProvider;
+  }>;
 }
 
 const combinedReducer: CombinedReducer = {
@@ -38,6 +43,7 @@ const combinedReducer: CombinedReducer = {
   rightDrawer: rightDrawerSlice,
   modal: modalSlice,
   lead: leadsSlice,
+  auth: authSlice,
 };
 
 // export default configureStore({
