@@ -6,6 +6,7 @@ import {ITokenTransferor} from "./interfaces/ITokenTransferor.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {VRFCoordinatorV2Interface} from "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import {VRFConsumerBaseV2} from "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
+import {AutomationCompatibleInterface} from "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 import {IERC1155} from "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -36,8 +37,9 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 // private
 // internal & private view & pure functions
 // external & public view & pure functions
+// current raffle contract live on testnet VRF & Automation working 0xEb1458F95C07aa91ABfc7A1Baf03080ff44FA350
 
-contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
+contract Raffle is Ownable, ReentrancyGuard, AutomationCompatibleInterface, VRFConsumerBaseV2 {
     
     ITokenTransferor public ccip;
     //VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
@@ -50,13 +52,16 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
     error RaffleClosed();
     error RaffleStillOpen();
     error RandomNumberNotAvailable(bytes32 _raffleId);
+    error InvalidRaffleState(Status _status);
     //////////////
     /// EVENTS ///
     //////////////
 
     event RequestSent(uint256 requestId, uint32 numWords);
     event AddedToRaffle(address usr, bytes32 raffleId);
-    event RaffleCreated(bytes32 _raffleId);
+    event RaffleCreated(bytes32 raffleId, uint256 endTime);
+    event RaffleStarted(bytes32 raffleId);
+    event RaffleEnded(bytes32 raffleId, address winner);
 
     
     event RequestFulfilled(
@@ -66,6 +71,7 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
     );
     // array of address that have entered a raffle
     address[] public entrantsArray;
+    bytes32[] public raffleIds;
 
     //////////////
     // Mappings //
@@ -121,9 +127,10 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
     }
 
     enum Status {
-        PENDING,
-        DRAWING,
-        ENDING
+        CREATED, // create raffle has been called
+        STARTED, // prize of raffle has been "staked" in contract
+        DRAWING, // upkeep is true, VRF is called
+        ENDED // winner was picked and prize was sent to winner
     }
 
     /////////////////////
@@ -143,6 +150,10 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
     uint32 private gasLimit;
     uint16 private constant REQUEST_CONFIRMATIONS = 5;
     uint8 private constant NUM_WORDS = 1;
+
+    /////////////////////////
+    /// Automation Struct ///
+    /////////////////////////
 
     /////////////////
     /// Modifiers /// 
@@ -267,13 +278,52 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
 
     }
 
+    //////////////////
+    /// Automation ///
+    //////////////////
+    /**
+     * @dev This is the function that the Chainlink Keeper nodes call
+     * they look for `upkeepNeeded` to return True.
+     * the following should be true for this to return true:
+     */
+    function checkUpkeep(bytes memory /* checkData */) public view override returns (bool upkeepNeeded, bytes memory performData){
+        for (uint256 i = 0; i < raffleIds.length; i++) {
+            bytes32 raffleId = raffleIds[i];
+
+            RaffleInfo storage raffleInfo = raffle[raffleId];
+            upkeepNeeded = (raffleInfo.endTime < block.timestamp); 
+            if (upkeepNeeded) {
+                performData = abi.encode(raffleId);
+                break;
+            }
+        }
+    }
+
+    /**
+     * @dev Once `checkUpkeep` is returning `true`, this function is called
+     * and it kicks off a Chainlink VRFv2 call to get a random number.
+     */
+    function performUpkeep(bytes calldata performData) external override {
+        bytes32 raffleId = abi.decode(performData, (bytes32));
+        RaffleInfo storage raffleInfo = raffle[raffleId];
+
+        (bool upkeepNeeded, ) = checkUpkeep("");
+        require(upkeepNeeded, "Upkeep not needed");
+        require(raffleInfo.status == Status.STARTED, "Raffle in wrong status");
+        //require(raffle.entriesLength > 0, "Raffle has no entries");
+        require(raffleInfo.endTime < block.timestamp, "Raffle not expired or sold out yet");
+
+        raffleInfo.status = Status.DRAWING;
+        _requestRandomWords(raffleId);
+    }
+
     //@todo how to tackle access control? OnlyOwner or whitelist?
     function createRaffle(RaffleType _raffleType, uint256 _endTime, address _prize, uint256 _prizeId, uint256 _prizeAmount, uint256 _entryFee) external onlyOwner returns (bytes32 raffleId) {
         //@note how can I make ID more random?
         raffleId = keccak256(abi.encodePacked(block.timestamp, msg.sender));
 
         RaffleInfo memory newRaffle = RaffleInfo({
-            status: Status.PENDING,
+            status: Status.CREATED,
             raffleType: _raffleType,
             id: raffleId,
             endTime: _endTime,
@@ -288,23 +338,30 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
 
         entrantsArray = raffleEntrants[raffleId];
         raffle[raffleId] = newRaffle;
+        raffleIds.push(raffleId);
         
         raffleCreator[raffleId] = msg.sender;
 
 
-        emit RaffleCreated(raffleId);
+        emit RaffleCreated(raffleId, newRaffle.endTime);
 
     }
 
     function stakePrize(bytes32 _raffleId) onlyOwner external {
         // handle approvals
         _transferPrizeToRaffle(_raffleId);
+
+        RaffleInfo storage raffleInfo = raffle[_raffleId];
+        raffleInfo.status = Status.STARTED;
+
+        emit RaffleStarted(_raffleId);
+
     }
 
     function addToRaffle(address _usr, bytes32 _raffleId) external onlyOwner{
         RaffleInfo memory raffleInfo = raffle[_raffleId];
        
-        if(raffleInfo.status != Status.PENDING) {
+        if(raffleInfo.status != Status.STARTED) {
             revert InvalidRaffle(_raffleId);
         }
 
@@ -330,7 +387,7 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
         RaffleInfo memory raffleInfo = raffle[_raffleId];
         entrantsArray = raffleEntrants[_raffleId];
 
-        if(raffleInfo.status != Status.PENDING) {
+        if(raffleInfo.status != Status.STARTED) {
             revert InvalidRaffle(_raffleId);
         }
 
@@ -387,11 +444,19 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
             revert RandomNumberNotAvailable(_raffleId);
         }
 
+        if(raffleInfo.status != Status.DRAWING) {
+            revert InvalidRaffleState(raffleInfo.status);
+        }
+
         entrantsArray = raffleEntrants[_raffleId];
 
         raffleInfo.winner = address(entrantsArray[raffleInfo.randomNumber]);
 
         _transferPrizeToWinner(_raffleId);
+
+        raffleInfo.status = Status.ENDED;
+
+        emit RaffleEnded(_raffleId, raffleInfo.winner);
 
         return raffleInfo.winner;
     }
@@ -455,6 +520,10 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
     function _transferPrizeToRaffle(bytes32 _raffleId) internal {
         RaffleInfo memory raffleInfo = raffle[_raffleId];
 
+        if(raffleInfo.status != Status.CREATED) {
+            revert InvalidRaffleState(raffleInfo.status);
+        }
+
         if(raffleInfo.raffleType == RaffleType.ERC1155 && raffleInfo.prizeAmount == 1) {
             IERC1155(raffleInfo.prize).safeTransferFrom(msg.sender, address(this), raffleInfo.prizeId, raffleInfo.prizeAmount, "");
         } else if(raffleInfo.raffleType == RaffleType.ERC1155 && raffleInfo.prizeAmount > 1) {
@@ -475,6 +544,8 @@ contract Raffle is Ownable, ReentrancyGuard, VRFConsumerBaseV2 {
         if(raffleInfo.raffleType == RaffleType.ERC20) {
             IERC20(raffleInfo.prize).transferFrom(msg.sender, address(this), raffleInfo.prizeAmount);
         }
+
+
     }
 
     /// helper func to change gasLimit for VRF
