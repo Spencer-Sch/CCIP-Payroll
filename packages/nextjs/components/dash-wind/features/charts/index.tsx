@@ -17,7 +17,7 @@ function Charts() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDatePickerValueChange = (newValue: DateValueType, e?: HTMLInputElement | null | undefined) => {
     if (newValue !== null) {
-      console.log("newValue:", newValue);
+      // console.log("newValue:", newValue);
       setDateValue(newValue);
     }
   };

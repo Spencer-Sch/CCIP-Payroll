@@ -1,34 +1,92 @@
 import { useState } from "react";
-import Link from "next/link";
-import InputText from "../../components/Input/InputText";
-import ErrorText from "../../components/Typography/ErrorText";
 import { UpdateFormValues } from "../../types/FormTypes";
 import LandingIntro from "./LandingIntro";
+import { Address, createWalletClient, custom } from "viem";
+import { polygonMumbai } from "viem/chains";
+import { setIsConnected } from "~~/auth/authSlice";
+import { web3auth } from "~~/auth/web3auth";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
+import DeployForm from "~~/components/web-3-crew/register-page/DeployForm";
+import EmployeeRegistered from "~~/components/web-3-crew/register-page/EmployeeRegistered";
+import RegisterForm from "~~/components/web-3-crew/register-page/RegisterForm";
+
+type RegisterState = "init" | "company-deploy" | "employee-complete" | "loading";
 
 function Register() {
   const INITIAL_REGISTER_OBJ = {
-    name: "",
-    password: "",
     emailId: "",
   };
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [registerState, setRegisterState] = useState<RegisterState>("init");
   const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
+  const [walletAddress, setWalletAddress] = useState<Address | null>(null);
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useMyDispatch();
+
+  async function login() {
+    try {
+      await web3auth.connect();
+      if (web3auth.connected) {
+        dispatch(setIsConnected({ isConnected: true }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function getAccounts() {
+    if (!web3auth.provider) {
+      console.log("from Register - getAccounts: provider not defined");
+      return;
+    }
+    const client = createWalletClient({
+      chain: polygonMumbai,
+      transport: custom(web3auth.provider),
+    });
+
+    // Get user's public address
+    const [address] = await client.getAddresses();
+    return address;
+  }
+
+  const registerCompany = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setErrorMessage("");
 
-    if (registerObj.name.trim() === "") return setErrorMessage("Name is required! (use any value)");
-    if (registerObj.emailId.trim() === "") return setErrorMessage("Email Id is required! (use any value)");
-    if (registerObj.password.trim() === "") return setErrorMessage("Password is required! (use any value)");
+    if (registerObj.emailId.trim() === "") return setErrorMessage("Email is required!");
     else {
-      setLoading(true);
-      // Call API to check user credentials and save token in localstorage
-      localStorage.setItem("token", "DumyTokenHere");
-      setLoading(false);
-      window.location.href = "/dapp/welcome";
+      setRegisterState("loading");
+      console.log("logging in company...");
+      await login();
+      // Account Abstraction goes here...?
+      console.log("getting account address...");
+      const address = await getAccounts();
+      if (address) {
+        // Prompt user to fund wallet?
+        setWalletAddress(address);
+        // Prompt use to deploy contract using wallet address
+        setRegisterState("company-deploy");
+      }
+    }
+  };
+
+  const registerEmployee = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setErrorMessage("");
+
+    if (registerObj.emailId.trim() === "") return setErrorMessage("Email is required!");
+    else {
+      setRegisterState("loading");
+      console.log("logging in employee...");
+      await login();
+      // Account Abstraction goes here...?
+      const address = await getAccounts();
+      if (address) {
+        setWalletAddress(address);
+        setRegisterState("employee-complete");
+      }
     }
   };
 
@@ -44,51 +102,19 @@ function Register() {
           <div className="">
             <LandingIntro />
           </div>
-          <div className="py-24 px-10">
-            <h2 className="text-2xl font-semibold mb-2 text-center">Register</h2>
-            <form onSubmit={e => submitForm(e)}>
-              <div className="mb-4">
-                <InputText
-                  defaultValue={registerObj.name}
-                  updateType="name"
-                  containerStyle="mt-4"
-                  labelTitle="Name"
-                  updateFormValue={updateFormValue}
-                />
-
-                <InputText
-                  defaultValue={registerObj.emailId}
-                  updateType="emailId"
-                  containerStyle="mt-4"
-                  labelTitle="Email Id"
-                  updateFormValue={updateFormValue}
-                />
-
-                <InputText
-                  defaultValue={registerObj.password}
-                  type="password"
-                  updateType="password"
-                  containerStyle="mt-4"
-                  labelTitle="Password"
-                  updateFormValue={updateFormValue}
-                />
-              </div>
-
-              <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
-              <button type="submit" className={"btn mt-2 w-full btn-primary" + (loading ? " loading" : "")}>
-                Register
-              </button>
-
-              <div className="text-center mt-4">
-                Already have an account?{" "}
-                <Link href="/login">
-                  <span className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">
-                    Login
-                  </span>
-                </Link>
-              </div>
-            </form>
-          </div>
+          {registerState === "loading" && <div>Loading...</div>}
+          {registerState === "init" && (
+            <RegisterForm
+              updateFormValue={updateFormValue}
+              registerObj={registerObj}
+              // loading={loading}
+              errorMessage={errorMessage}
+              registerCompany={registerCompany}
+              registerEmployee={registerEmployee}
+            />
+          )}
+          {registerState === "company-deploy" && <DeployForm ownerAddress={walletAddress} />}
+          {registerState === "employee-complete" && <EmployeeRegistered employeeAddress={walletAddress} />}
         </div>
       </div>
     </div>

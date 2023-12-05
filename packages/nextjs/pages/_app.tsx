@@ -61,7 +61,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <WagmiConfig config={wagmiConfig}>
-      <WatchPathname />
+      {/* <WatchPathname /> */}
       <NextNProgress />
       <RainbowKitProvider
         chains={appChains.chains}
@@ -69,6 +69,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         theme={isDarkTheme ? darkTheme() : lightTheme()}
       >
         <Provider store={store}>
+          <WatchPathname />
           <div className="flex flex-col min-h-screen">{getLayout(<Component {...props.pageProps} />)}</div>
           {/* <div className="flex flex-col min-h-screen">{getLayout(<Component {...pageProps} />)}</div> */}
         </Provider>
