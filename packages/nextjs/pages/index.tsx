@@ -2,31 +2,30 @@ import { ReactElement, useEffect } from "react";
 // import Link from "next/link";
 import { useRouter } from "next/router";
 import type { NextPageWithLayout } from "./_app";
-import { setAuthProvider, setIsConnected } from "~~/auth/authSlice";
+import { setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { useMyDispatch } from "~~/components/dash-wind/app/store";
+import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 import CleanLayout from "~~/components/layouts/CleanLayout";
 
 const LandingPage: NextPageWithLayout = () => {
   const router = useRouter();
   const dispatch = useMyDispatch();
+  const { isConnected } = useMySelector((state: MyState) => state.auth);
 
   useEffect(() => {
-    dispatch(setAuthProvider({ provider: web3auth.provider }));
-
     if (web3auth.connected) {
       dispatch(setIsConnected({ isConnected: true }));
     }
   }, [dispatch]);
 
   function launchDapp() {
-    if (web3auth.connected) {
+    if (isConnected) {
       // redirect to dashboard if logged in
       router.push("/dapp/dashboard");
       return;
     }
-    // redirect to login if not connected
+    // redirect to login if not logged in
     router.push("/login");
   }
   return (
@@ -47,9 +46,6 @@ const LandingPage: NextPageWithLayout = () => {
         <button onClick={launchDapp} className="btn btn-primary rounded-lg">
           Launch Dapp
         </button>
-        {/* <Link href="/login" className="btn btn-primary rounded-lg">
-          Launch Dapp
-        </Link> */}
       </div>
     </>
   );
