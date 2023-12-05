@@ -66,11 +66,6 @@ contract PayrollFactory is Ownable {
         return address(newPayroll);
     }
 
-    ///@dev changes fee for deployment 
-    function updateDeploymentFee(uint256 newFee) external onlyOwner {
-        deployment_fee = newFee;
-    }
-
     /// Functions to update deployment params so that they can be changed in the future or for deployment on other chains
     function updateDeploymentFee(uint256 newFee) external onlyOwner {
         deployment_fee = newFee;

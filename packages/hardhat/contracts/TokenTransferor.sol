@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IRouterClient} from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
-import {Ownable} from "@chainlink/contracts-ccip/src/v0.8/shared/access/Ownable.sol";
 import {Client} from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
 import {IERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/token/ERC20/IERC20.sol";
 
@@ -53,9 +53,8 @@ contract TokenTransferor is Ownable {
     // @notice Constructor initializes the contract with the router address.
     // @param _router The address of the router contract.
     // @param _link The address of the link contract.
-    // fuji router 0x554472a2720e5e7d5d3c817529aba05eed5f82d8
-    // fuji LINK 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846
-    // fuji deployed TokenTransferor
+    // mumbai router 0x70499c328e1e2a3c41108bd3730f6670a44595d1
+    // mumbai LINK 0x326C977E6efc84E512bB9C30f76E30c160eD06FB
     constructor(address _router, address _link) {
         s_router = IRouterClient(_router);
         s_linkToken = IERC20(_link);

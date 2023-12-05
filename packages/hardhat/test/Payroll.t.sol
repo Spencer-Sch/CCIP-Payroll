@@ -169,16 +169,15 @@ contract PayRollTest is Test {
 
     function test_canChangePaymentSplits() public {
         payroll.addEmployee(employee1, true, 52000);
-        payroll.setPaymentSplits(employee1, [0,20,20,20,20,20]);
+        payroll.setPaymentSplits(employee1, [0,2,25,25,25]);
 
         Payroll.PaymentSplit memory paymentSplits = payroll.getEmployeePaymentSplits(employee1);
 
         assertEq(paymentSplits.paySplitPercentageNative, 0);
-        assertEq(paymentSplits.paySplitPercentage1, 20);
-        assertEq(paymentSplits.paySplitPercentage2, 20);
-        assertEq(paymentSplits.paySplitPercentage3, 20);
-        assertEq(paymentSplits.paySplitPercentage4, 20);
-        assertEq(paymentSplits.paySplitPercentage5, 20);
+        assertEq(paymentSplits.paySplitPercentage1, 25);
+        assertEq(paymentSplits.paySplitPercentage2, 25);
+        assertEq(paymentSplits.paySplitPercentage3, 25);
+        assertEq(paymentSplits.paySplitPercentage4, 25);
         
     }
 
