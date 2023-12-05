@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity 0.8.19;
 
 import {TokenTransferor} from "./TokenTransferor.sol";
 import {Payroll} from "./Payroll.sol";
@@ -18,18 +18,25 @@ contract PayrollFactory is Ownable {
     IERC20 public paymentToken;
 
     error InvalidAddress();
+    error InsufficientFunds(uint256 amount);
 
     event TokenTransferorDeployed(address indexed deployer, address contractAddress);
     event PayrollDeployed(address indexed deployer, address contractAddress, address tokenTransferorAddress);
 
+    ///@param _router The address of the Chainlink Router for local chain
+    ///@param _linkToken The address of the LINK token for local chain
+    ///@param _paymentToken The address of the payment token for Payroll Contract on native chain
     constructor(address _router, address _linkToken, address _paymentToken) {
         router = IRouterClient(_router);
         linkToken = IERC20(_linkToken);
         paymentToken = IERC20(_paymentToken);
     }
 
+    ///@dev Deploys TokenTransferor and Payroll contracts
     function deployPayrollAndTokenTransferor() external payable returns (address payrollAddress, address tokenTransferorAddress) {
-        require(msg.value >= deployment_fee, "Insufficient funds sent for deployment");
+        if(msg.value < deployment_fee){
+            revert InsufficientFunds(msg.value);
+        } 
 
         tokenTransferorAddress = deployTokenTransferor();
         payrollAddress = deployPayroll(tokenTransferorAddress);
@@ -37,7 +44,7 @@ contract PayrollFactory is Ownable {
     }
 
     // Function to deploy TokenTransferor
-    ///@dev Transfer ownership is done in 2 steps for TokenTransferor. New Owner must call acceptOwnership() on TokenTransferor.
+    ///@dev transfers ownership of TokenTransferor to caller of deployPayrollAndTokenTransferor
     function deployTokenTransferor() internal returns (address) {
         //require(msg.value >= deployment_fee, "Insufficient funds sent for deployment");
 
@@ -47,7 +54,9 @@ contract PayrollFactory is Ownable {
         return address(newTokenTransferor);
     }
 
-    // Function to deploy Payroll
+    /// Function to deploy Payroll
+    ///@dev transfers ownership of Payroll to caller of deployPayrollAndTokenTransferor
+    ///@param tokenTransferorAddress The address of the newly deployed TokenTransferor contract
     function deployPayroll(address tokenTransferorAddress) internal returns (address) {
         //require(msg.value >= deployment_fee, "Insufficient funds sent for deployment");
 
@@ -57,8 +66,26 @@ contract PayrollFactory is Ownable {
         return address(newPayroll);
     }
 
+    ///@dev changes fee for deployment 
     function updateDeploymentFee(uint256 newFee) external onlyOwner {
         deployment_fee = newFee;
+    }
+
+    /// Functions to update deployment params so that they can be changed in the future or for deployment on other chains
+    function updateDeploymentFee(uint256 newFee) external onlyOwner {
+        deployment_fee = newFee;
+    }
+
+    function changeRouter(address newRouter) external onlyOwner {
+        router = IRouterClient(newRouter);
+    }
+
+    function changeLinkToken(address newLinkToken) external onlyOwner {
+        linkToken = IERC20(newLinkToken);
+    }
+
+    function changePaymentToken(address newPaymentToken) external onlyOwner {
+        paymentToken = IERC20(newPaymentToken);
     }
 
     // Fallback function to receive ETH

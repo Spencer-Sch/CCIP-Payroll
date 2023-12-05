@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {IRouterClient} from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
-import {OwnerIsCreator} from "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol";
+import {Ownable} from "@chainlink/contracts-ccip/src/v0.8/shared/access/Ownable.sol";
 import {Client} from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
 import {IERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/token/ERC20/IERC20.sol";
 
@@ -13,7 +13,7 @@ import {IERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-sol
  */
 
 /// @title - A simple contract for transferring tokens across chains.
-contract TokenTransferor is OwnerIsCreator {
+contract TokenTransferor is Ownable {
     // Custom errors to provide more descriptive revert messages.
     error NotEnoughBalance(uint256 currentBalance, uint256 calculatedFees); // Used to make sure contract has enough balance to cover the fees.
     error NothingToWithdraw(); // Used when trying to withdraw Ether but there's nothing to withdraw.
@@ -95,7 +95,7 @@ contract TokenTransferor is OwnerIsCreator {
     /// @notice Transfer tokens to receiver on the destination chain.
     /// @notice pay in LINK.
     /// @notice the token must be in the list of supported tokens.
-    /// @notice This function can only be called by the owner.
+    /// @notice This function can only be called by allowlisted addresses.
     /// @dev Assumes your contract has sufficient LINK tokens to pay for the fees.
     /// @param _destinationChainSelector The identifier (aka selector) for the destination blockchain.
     /// @param _receiver The address of the recipient on the destination blockchain.
@@ -161,7 +161,7 @@ contract TokenTransferor is OwnerIsCreator {
     /// @notice Transfer tokens to receiver on the destination chain.
     /// @notice Pay in native gas such as ETH on Ethereum or MATIC on Polgon.
     /// @notice the token must be in the list of supported tokens.
-    /// @notice This function can only be called by the owner.
+    /// @notice This function can only be called by allowlisted addresses.
     /// @dev Assumes your contract has sufficient native gas like ETH on Ethereum or MATIC on Polygon.
     /// @param _destinationChainSelector The identifier (aka selector) for the destination blockchain.
     /// @param _receiver The address of the recipient on the destination blockchain.
@@ -332,5 +332,10 @@ contract TokenTransferor is OwnerIsCreator {
 
     function isChainIdAllowed(uint64 _chainId) public view returns (bool) {
         return allowlistedChains[_chainId];
+    }
+
+    function transferOwnership(address newOwner) public override onlyOwner {
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        _transferOwnership(newOwner);
     }
 }
