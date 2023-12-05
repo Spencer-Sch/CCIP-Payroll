@@ -9,7 +9,7 @@ import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
-import { setAuthProvider, setIsConnected } from "~~/auth/authSlice";
+import { setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 // import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
@@ -42,9 +42,8 @@ function Header() {
 
   async function logoutUser() {
     await web3auth.logout();
-    dispatch(setAuthProvider({ provider: null }));
     dispatch(setIsConnected({ isConnected: false }));
-    router.push("/");
+    router.push("/login");
   }
 
   return (
