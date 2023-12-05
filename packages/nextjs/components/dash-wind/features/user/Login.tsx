@@ -1,58 +1,50 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import InputText from "../../components/Input/InputText";
 import ErrorText from "../../components/Typography/ErrorText";
 import { UpdateFormValues } from "../../types/FormTypes";
 import LandingIntro from "./LandingIntro";
-import { setAuthProvider, setIsConnected } from "~~/auth/authSlice";
+import { setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
-import { useMyDispatch } from "~~/components/dash-wind/app/store";
+import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
 function Login() {
   const INITIAL_LOGIN_OBJ = {
-    password: "",
+    contractAddress: "",
     emailId: "",
   };
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginObj, setLoginObj] = useState(INITIAL_LOGIN_OBJ);
+  const { isConnected } = useMySelector((state: MyState) => state.auth);
 
   const router = useRouter();
   const dispatch = useMyDispatch();
 
   // Web3Auth
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const web3authProvider = await web3auth.connect();
-        dispatch(setAuthProvider({ provider: web3authProvider }));
-        if (web3auth.connected) {
-          dispatch(setIsConnected({ isConnected: true }));
-        }
+  async function login() {
+    if (isConnected) {
+      router.push("/dapp/dashboard");
+    }
+    try {
+      await web3auth.connect();
+      if (web3auth.connected) {
+        dispatch(setIsConnected({ isConnected: true }));
         router.push("/dapp/dashboard");
-      } catch (error) {
-        console.error(error);
       }
-    };
-    init();
-  });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage("");
 
-    if (loginObj.emailId.trim() === "") return setErrorMessage("Email Id is required! (use any value)");
-    if (loginObj.password.trim() === "") return setErrorMessage("Password is required! (use any value)");
-    else {
-      setLoading(true);
-      // Call API to check user credentials and save token in localstorage
-      localStorage.setItem("token", "DumyTokenHere");
-      setLoading(false);
-      router.push("/dapp/welcome");
-      // window.location.href = "/dapp/welcome";
-    }
+    if (loginObj.emailId.trim() === "") return setErrorMessage("Email is required!");
+    if (loginObj.contractAddress.trim() === "") return setErrorMessage("Contract Address is required!");
   };
 
   const updateFormValue = ({ updateType, value }: UpdateFormValues) => {
@@ -72,34 +64,25 @@ function Login() {
             <form onSubmit={e => submitForm(e)}>
               <div className="mb-4">
                 <InputText
-                  type="emailId"
-                  defaultValue={loginObj.emailId}
-                  updateType="emailId"
+                  defaultValue={loginObj.contractAddress}
+                  updateType="contractAddress"
                   containerStyle="mt-4"
-                  labelTitle="Email Id"
+                  labelTitle="Contract Address"
                   updateFormValue={updateFormValue}
                 />
 
                 <InputText
-                  defaultValue={loginObj.password}
-                  type="password"
-                  updateType="password"
+                  type="emailId"
+                  defaultValue={loginObj.emailId}
+                  updateType="emailId"
                   containerStyle="mt-4"
-                  labelTitle="Password"
+                  labelTitle="Email"
                   updateFormValue={updateFormValue}
                 />
               </div>
 
-              <div className="text-right text-primary">
-                <Link href="/forgot-password">
-                  <span className="text-sm  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">
-                    Forgot Password?
-                  </span>
-                </Link>
-              </div>
-
               <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
-              <button type="submit" className={"btn mt-2 w-full btn-primary" + (loading ? " loading" : "")}>
+              <button onClick={login} className="btn mt-2 w-full btn-primary">
                 Login
               </button>
 
