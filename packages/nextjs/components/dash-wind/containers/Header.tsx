@@ -9,6 +9,8 @@ import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
+import { setAuthProvider, setIsConnected } from "~~/auth/authSlice";
+import { web3auth } from "~~/auth/web3auth";
 // import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 import { Address } from "~~/components/web-3-crew/Address";
@@ -38,10 +40,10 @@ function Header() {
     dispatch(openRightDrawer({ header: "Notifications", bodyType: RIGHT_DRAWER_TYPES.NOTIFICATION }));
   };
 
-  function logoutUser() {
-    if (typeof window !== "undefined") {
-      localStorage.clear();
-    }
+  async function logoutUser() {
+    await web3auth.logout();
+    dispatch(setAuthProvider({ provider: null }));
+    dispatch(setIsConnected({ isConnected: false }));
     router.push("/");
   }
 
