@@ -1,37 +1,34 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IProvider } from "@web3auth/base";
-
-export type AuthProvider = IProvider | null;
 
 export interface AuthRootState {
   auth: {
     isConnected: boolean;
-    provider: AuthProvider;
+    isAdmin: boolean;
   };
 }
 
 interface AuthState {
   isConnected: boolean;
-  provider: AuthProvider;
+  isAdmin: boolean;
 }
 
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
     isConnected: false,
-    provider: null as AuthProvider,
+    isAdmin: false,
   },
   reducers: {
-    setAuthProvider: (state: AuthState, action: PayloadAction<{ provider: AuthProvider }>) => {
-      state.provider = action.payload.provider;
-    },
-
     setIsConnected: (state: AuthState, action: PayloadAction<{ isConnected: boolean }>) => {
       state.isConnected = action.payload.isConnected;
+    },
+
+    setIsAdmin: (state: AuthState, action: PayloadAction<{ isAdmin: boolean }>) => {
+      state.isAdmin = action.payload.isAdmin;
     },
   },
 });
 
-export const { setAuthProvider, setIsConnected } = authSlice.actions;
+export const { setIsConnected, setIsAdmin } = authSlice.actions;
 
 export default authSlice.reducer;
