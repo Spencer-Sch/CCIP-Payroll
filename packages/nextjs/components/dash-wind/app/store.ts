@@ -1,12 +1,15 @@
 import headerSlice from "../features/common/headerSlice";
 import modalSlice from "../features/common/modalSlice";
 import rightDrawerSlice from "../features/common/rightDrawerSlice";
-import leadsSlice from "../features/leads/leadSlice";
+// import leadsSlice from "../features/leads/leadSlice";
+import employeesSlice, { Employee } from "../features/employees/employeesSlice";
 import { Reducer, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { Action } from "redux";
-import authSlice, { AuthProvider } from "~~/auth/authSlice";
+import authSlice from "~~/auth/authSlice";
+
+// import authSlice, { AuthProvider } from "~~/auth/authSlice";
 
 interface CombinedReducer {
   header: Reducer<{
@@ -28,13 +31,14 @@ interface CombinedReducer {
     size: string;
     extraObject: Record<string, any>;
   }>;
-  lead: Reducer<{
+  employees: Reducer<{
     isLoading: boolean;
-    leads: never[];
+    employees: Employee[];
   }>;
   auth: Reducer<{
     isConnected: boolean;
-    provider: AuthProvider;
+    isAdmin: boolean;
+    // provider: AuthProvider;
   }>;
 }
 
@@ -42,7 +46,7 @@ const combinedReducer: CombinedReducer = {
   header: headerSlice,
   rightDrawer: rightDrawerSlice,
   modal: modalSlice,
-  lead: leadsSlice,
+  employees: employeesSlice,
   auth: authSlice,
 };
 

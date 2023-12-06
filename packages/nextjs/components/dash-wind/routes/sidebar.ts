@@ -1,9 +1,9 @@
 /** Icons are imported separatly to reduce build time */
 // import ArrowRightOnRectangleIcon from "@heroicons/react/24/outline/ArrowRightOnRectangleIcon";
 // import BellIcon from "@heroicons/react/24/outline/BellIcon";
-import BoltIcon from "@heroicons/react/24/outline/BoltIcon";
-import CalendarDaysIcon from "@heroicons/react/24/outline/CalendarDaysIcon";
-import ChartBarIcon from "@heroicons/react/24/outline/ChartBarIcon";
+// import BoltIcon from "@heroicons/react/24/outline/BoltIcon";
+// import CalendarDaysIcon from "@heroicons/react/24/outline/CalendarDaysIcon";
+// import ChartBarIcon from "@heroicons/react/24/outline/ChartBarIcon";
 // import CodeBracketSquareIcon from "@heroicons/react/24/outline/CodeBracketSquareIcon";
 import Cog6ToothIcon from "@heroicons/react/24/outline/Cog6ToothIcon";
 import CurrencyDollarIcon from "@heroicons/react/24/outline/CurrencyDollarIcon";
@@ -11,7 +11,7 @@ import CurrencyDollarIcon from "@heroicons/react/24/outline/CurrencyDollarIcon";
 // import DocumentIcon from "@heroicons/react/24/outline/DocumentIcon";
 // import DocumentTextIcon from "@heroicons/react/24/outline/DocumentTextIcon";
 // import ExclamationTriangleIcon from "@heroicons/react/24/outline/ExclamationTriangleIcon";
-import InboxArrowDownIcon from "@heroicons/react/24/outline/InboxArrowDownIcon";
+// import InboxArrowDownIcon from "@heroicons/react/24/outline/InboxArrowDownIcon";
 // import KeyIcon from "@heroicons/react/24/outline/KeyIcon";
 import Squares2X2Icon from "@heroicons/react/24/outline/Squares2X2Icon";
 // import TableCellsIcon from "@heroicons/react/24/outline/TableCellsIcon";
@@ -22,7 +22,7 @@ import WalletIcon from "@heroicons/react/24/outline/WalletIcon";
 const iconClasses = `h-6 w-6`;
 const submenuIconClasses = `h-5 w-5`;
 
-const routes = [
+export const adminRoutes = [
   {
     path: "/dapp/dashboard",
     icon: Squares2X2Icon,
@@ -30,10 +30,10 @@ const routes = [
     name: "Dashboard",
   },
   {
-    path: "/dapp/leads", // url
-    icon: InboxArrowDownIcon, // icon component
+    path: "/dapp/employees", // url
+    icon: UsersIcon, // icon component
     className: iconClasses,
-    name: "Leads", // name that appear in Sidebar
+    name: "Employees", // name that appear in Sidebar
   },
   {
     path: "/dapp/transactions", // url
@@ -41,62 +41,87 @@ const routes = [
     className: iconClasses,
     name: "Transactions", // name that appear in Sidebar
   },
-  {
-    path: "/dapp/charts", // url
-    icon: ChartBarIcon, // icon component
-    className: iconClasses,
-    name: "Analytics", // name that appear in Sidebar
-  },
-  {
-    path: "/dapp/integration", // url
-    icon: BoltIcon, // icon component
-    className: iconClasses,
-    name: "Integration", // name that appear in Sidebar
-  },
-  {
-    path: "/dapp/calendar", // url
-    icon: CalendarDaysIcon, // icon component
-    className: iconClasses,
-    name: "Calendar", // name that appear in Sidebar
-  },
-
   // {
-  //   path: "", //no url needed as this has submenu
-  //   icon: DocumentDuplicateIcon, // icon component
-  //   className: `${iconClasses} inline`,
-  //   name: "Pages", // name that appear in Sidebar
-  //   submenu: [
-  //     {
-  //       path: "/login",
-  //       icon: ArrowRightOnRectangleIcon,
-  //       className: submenuIconClasses,
-  //       name: "Login",
-  //     },
-  //     {
-  //       path: "/register", //url
-  //       icon: UserIcon, // icon component
-  //       className: submenuIconClasses,
-  //       name: "Register", // name that appear in Sidebar
-  //     },
-  //     {
-  //       path: "/forgot-password",
-  //       icon: KeyIcon,
-  //       className: submenuIconClasses,
-  //       name: "Forgot Password",
-  //     },
-  //     {
-  //       path: "/dapp/blank",
-  //       icon: DocumentIcon,
-  //       className: submenuIconClasses,
-  //       name: "Blank Page",
-  //     },
-  //     {
-  //       path: "/dapp/404",
-  //       icon: ExclamationTriangleIcon,
-  //       className: submenuIconClasses,
-  //       name: "404",
-  //     },
-  //   ],
+  //   path: "/dapp/charts", // url
+  //   icon: ChartBarIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Analytics", // name that appear in Sidebar
+  // },
+  // {
+  //   path: "/dapp/integration", // url
+  //   icon: BoltIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Integration", // name that appear in Sidebar
+  // },
+  // {
+  //   path: "/dapp/calendar", // url
+  //   icon: CalendarDaysIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Calendar", // name that appear in Sidebar
+  // },
+  {
+    path: "", //no url needed as this has submenu
+    icon: Cog6ToothIcon, // icon component
+    className: `${iconClasses} inline`,
+    name: "Settings", // name that appear in Sidebar
+    submenu: [
+      // {
+      //   path: "/dapp/settings-profile", //url
+      //   icon: UserIcon, // icon component
+      //   className: submenuIconClasses,
+      //   name: "Profile", // name that appear in Sidebar
+      // },
+      {
+        path: "/dapp/settings-billing",
+        icon: WalletIcon,
+        className: submenuIconClasses,
+        name: "Billing",
+      },
+      // {
+      //   path: "/dapp/settings-team", // url
+      //   icon: UsersIcon, // icon component
+      //   className: submenuIconClasses,
+      //   name: "Team Members", // name that appear in Sidebar
+      // },
+    ],
+  },
+];
+export const userRoutes = [
+  {
+    path: "/dapp/dashboard",
+    icon: Squares2X2Icon,
+    className: iconClasses,
+    name: "Dashboard",
+  },
+  // {
+  //   path: "/dapp/leads", // url
+  //   icon: InboxArrowDownIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Leads", // name that appear in Sidebar
+  // },
+  {
+    path: "/dapp/transactions", // url
+    icon: CurrencyDollarIcon, // icon component
+    className: iconClasses,
+    name: "Transactions", // name that appear in Sidebar
+  },
+  // {
+  //   path: "/dapp/charts", // url
+  //   icon: ChartBarIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Analytics", // name that appear in Sidebar
+  // },
+  // {
+  //   path: "/dapp/integration", // url
+  //   icon: BoltIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Integration", // name that appear in Sidebar
+  // },
+  // {
+  //   path: "/dapp/calendar", // url
+  //   icon: CalendarDaysIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Calendar", // name that appear in Sidebar
   // },
   {
     path: "", //no url needed as this has submenu
@@ -116,40 +141,14 @@ const routes = [
         className: submenuIconClasses,
         name: "Billing",
       },
-      {
-        path: "/dapp/settings-team", // url
-        icon: UsersIcon, // icon component
-        className: submenuIconClasses,
-        name: "Team Members", // name that appear in Sidebar
-      },
+      // {
+      //   path: "/dapp/settings-team", // url
+      //   icon: UsersIcon, // icon component
+      //   className: submenuIconClasses,
+      //   name: "Team Members", // name that appear in Sidebar
+      // },
     ],
   },
-  // {
-  //   path: "", //no url needed as this has submenu
-  //   icon: DocumentTextIcon, // icon component
-  //   className: `${iconClasses} inline`,
-  //   name: "Documentation", // name that appear in Sidebar
-  //   submenu: [
-  //     {
-  //       path: "/dapp/getting-started", // url
-  //       icon: DocumentTextIcon, // icon component
-  //       className: submenuIconClasses,
-  //       name: "Getting Started", // name that appear in Sidebar
-  //     },
-  //     {
-  //       path: "/dapp/features",
-  //       icon: TableCellsIcon,
-  //       className: submenuIconClasses,
-  //       name: "Features",
-  //     },
-  //     {
-  //       path: "/dapp/components",
-  //       icon: CodeBracketSquareIcon,
-  //       className: submenuIconClasses,
-  //       name: "Components",
-  //     },
-  //   ],
-  // },
 ];
 
-export default routes;
+// export default routes;

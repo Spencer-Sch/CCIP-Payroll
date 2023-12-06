@@ -1,7 +1,8 @@
 // import { useEffect } from "react";
 import ConfirmationModalBody from "../features/common/components/ConfirmationModalBody";
 import { ModalRootState, closeModal } from "../features/common/modalSlice";
-import AddLeadModalBody from "../features/leads/components/AddLeadModalBody";
+import AddEmployeeModalBody from "../features/employees/components/AddEmployeeModalBody";
+// import AddLeadModalBody from "../features/leads/components/AddLeadModalBody";
 import { MODAL_BODY_TYPES } from "../utils/globalConstantUtil";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
@@ -31,7 +32,8 @@ function ModalLayout() {
           {
             {
               // [MODAL_BODY_TYPES.LEAD_ADD_NEW]: <AddLeadModalBody closeModal={close} extraObject={extraObject} />,
-              [MODAL_BODY_TYPES.LEAD_ADD_NEW]: <AddLeadModalBody closeModal={close} />,
+              // [MODAL_BODY_TYPES.LEAD_ADD_NEW]: <AddLeadModalBody closeModal={close} />,
+              [MODAL_BODY_TYPES.EMPLOYEE_ADD_NEW]: <AddEmployeeModalBody closeModal={close} />,
               [MODAL_BODY_TYPES.CONFIRMATION]: <ConfirmationModalBody extraObject={extraObject} closeModal={close} />,
               [MODAL_BODY_TYPES.DEFAULT]: <div></div>,
             }[bodyType]
