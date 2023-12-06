@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface props {
-  styleClass: string;
+  styleClass?: string;
   children: ReactNode;
 }
 function Subtitle({ styleClass, children }: props) {
