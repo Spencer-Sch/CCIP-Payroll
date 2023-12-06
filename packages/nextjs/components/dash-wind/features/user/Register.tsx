@@ -42,6 +42,7 @@ function Register() {
       return;
     }
     const client = createWalletClient({
+      // account: privateKeyToAccount('0x...'); // from viem
       chain: polygonMumbai,
       transport: custom(web3auth.provider),
     });

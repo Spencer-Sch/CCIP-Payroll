@@ -6,9 +6,10 @@ interface props {
   children: ReactNode;
   topMargin?: string;
   TopSideButtons?: JSX.Element;
+  topSideButtonsLeft?: boolean;
 }
 
-function TitleCard({ title, children, topMargin, TopSideButtons }: props) {
+function TitleCard({ title, children, topMargin, TopSideButtons, topSideButtonsLeft }: props) {
   return (
     <div className={"card w-full p-6 bg-base-100 shadow-xl " + (topMargin || "mt-6")}>
       {/* Title for Card */}
@@ -16,7 +17,11 @@ function TitleCard({ title, children, topMargin, TopSideButtons }: props) {
         {title}
 
         {/* Top side button, show only if present */}
-        {TopSideButtons && <div className="inline-block float-right">{TopSideButtons}</div>}
+        {TopSideButtons && (
+          <div className={"inline-block " + (topSideButtonsLeft ? "float-left mr-2" : "float-right")}>
+            {TopSideButtons}
+          </div>
+        )}
       </Subtitle>
 
       <div className="divider mt-2"></div>
