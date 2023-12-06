@@ -225,3 +225,77 @@ export const RECENT_TRANSACTIONS = [
     date: moment().add(-3, "d").endOf("day"),
   },
 ];
+export const EMPLOYEES = [
+  {
+    name: "Alex",
+    avatar: "https://reqres.in/img/faces/1-image.jpg",
+    email: "alex@dashwind.com",
+    id: "1",
+    wallet: "0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770",
+    role: "Owner",
+    joinedOn: moment(new Date())
+      .add(-5 * 1, "days")
+      .format("DD MMM YYYY"),
+    lastActive: "5 hr ago",
+  },
+  {
+    name: "Ereena",
+    avatar: "https://reqres.in/img/faces/2-image.jpg",
+    email: "ereena@dashwind.com",
+    id: "2",
+    wallet: "0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770",
+    role: "Designer",
+    joinedOn: moment(new Date())
+      .add(-5 * 2, "days")
+      .format("DD MMM YYYY"),
+    lastActive: "15 min ago",
+  },
+  {
+    name: "John",
+    avatar: "https://reqres.in/img/faces/3-image.jpg",
+    email: "jhon@dashwind.com",
+    id: "3",
+    wallet: "0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770",
+    role: "Designer",
+    joinedOn: moment(new Date())
+      .add(-5 * 3, "days")
+      .format("DD MMM YYYY"),
+    lastActive: "20 hr ago",
+  },
+  {
+    name: "Matrix",
+    avatar: "https://reqres.in/img/faces/4-image.jpg",
+    email: "matrix@dashwind.com",
+    id: "4",
+    wallet: "0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770",
+    role: "Manager",
+    joinedOn: moment(new Date())
+      .add(-5 * 4, "days")
+      .format("DD MMM YYYY"),
+    lastActive: "1 hr ago",
+  },
+  {
+    name: "Virat",
+    avatar: "https://reqres.in/img/faces/5-image.jpg",
+    email: "virat@dashwind.com",
+    id: "5",
+    wallet: "0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770",
+    role: "Developer",
+    joinedOn: moment(new Date())
+      .add(-5 * 5, "days")
+      .format("DD MMM YYYY"),
+    lastActive: "40 min ago",
+  },
+  {
+    name: "Miya",
+    avatar: "https://reqres.in/img/faces/6-image.jpg",
+    email: "miya@dashwind.com",
+    id: "6",
+    wallet: "0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770",
+    role: "Developer",
+    joinedOn: moment(new Date())
+      .add(-5 * 7, "days")
+      .format("DD MMM YYYY"),
+    lastActive: "5 hr ago",
+  },
+];
