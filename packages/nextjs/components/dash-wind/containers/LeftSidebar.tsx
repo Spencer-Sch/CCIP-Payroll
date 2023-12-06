@@ -1,14 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 // import Image from "next/image";
+// import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import routes from "../routes/sidebar";
+import { adminRoutes, userRoutes } from "../routes/sidebar";
 import SidebarSubmenu from "./SidebarSubmenu";
+import { MyState, useMySelector } from "~~/components/dash-wind/app/store";
 
 // import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 
 function LeftSidebar() {
   const router = useRouter();
+  const { isAdmin } = useMySelector((state: MyState) => state.auth);
+
+  const routes = isAdmin ? adminRoutes : userRoutes;
+  // useEffect(() => {
+
+  // }, [isAdmin])
 
   // const close = () => {
   //   document.getElementById("left-sidebar-drawer")?.click();
@@ -39,9 +47,17 @@ function LeftSidebar() {
                   <SidebarSubmenu {...route} />
                 ) : (
                   <Link legacyBehavior href={route.path}>
-                    <a className={router.pathname === route.path ? "font-semibold bg-base-200 " : "font-normal"}>
+                    <a
+                      className={
+                        router.pathname === route.path ||
+                        (route.path === "/dapp/employees" && /\/employee\/./i.test(router.pathname))
+                          ? "font-semibold bg-base-200 "
+                          : "font-normal"
+                      }
+                    >
                       {<route.icon className={route.className} />} {route.name}
-                      {router.pathname === route.path ? (
+                      {router.pathname === route.path ||
+                      (route.path === "/dapp/employees" && /\/employee\/./i.test(router.pathname)) ? (
                         <span
                           className="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
                           aria-hidden="true"
