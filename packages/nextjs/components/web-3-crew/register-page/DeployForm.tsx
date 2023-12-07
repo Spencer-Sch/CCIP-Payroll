@@ -13,6 +13,9 @@ const payrollFactoryAddress = "";
 const payrollFactoryABI: Abi = [];
 
 export default function DeployForm({ ownerAddress }: props) {
+  /*-------------------------------------*/
+  // Kaz & Trevor
+  // deploy company contract after registration of account
   const { config } = usePrepareContractWrite({
     address: payrollFactoryAddress,
     abi: payrollFactoryABI,
@@ -27,6 +30,7 @@ export default function DeployForm({ ownerAddress }: props) {
   });
 
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
+  /*-------------------------------------*/
 
   return (
     <div className="py-24 px-10 relative">

@@ -6,6 +6,13 @@ import TitleCard from "../../components/Cards/TitleCard";
 import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 // import { showNotification } from "../common/headerSlice";
 import { openModal } from "../common/modalSlice";
+
+/*-------------------------------------*/
+// Kaz & Trevor
+// uncomment
+// import { useContractRead } from "wagmi";
+
+/*-------------------------------------*/
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import {
   /*MyState,*/
@@ -30,12 +37,64 @@ const TopSideButtons = () => {
   );
 };
 
+/*-------------------------------------*/
+// Kaz & Trevor
+// uncomment
+// const chainId = process.env.NEXT_PUBLIC_TARGET_LOCAL_CHAIN
+//   ? process.env.NEXT_PUBLIC_LOCAL_CHAIN_ID
+//   : process.env.NEXT_PUBLIC_TESTNET_CHAIN_ID;
+/*-------------------------------------*/
+
 function Employees() {
+  /*-------------------------------------*/
+  // Kaz & Trevor
+  // dummy employee data
   const [employees] = useState(EMPLOYEES);
+  /*-------------------------------------*/
   // const {} = useMySelector((state: MyState) => state.employees);
   const dispatch = useMyDispatch();
 
   const router = useRouter();
+
+  /*-------------------------------------*/
+  // Kaz & Trevor
+  // Component responsible for displaying table of employees on the employer dashboard
+  /** NOTE
+   * Employee addresses will be pulled from contract
+   * Addresses used to find employee data object in DB (dummy data right now)
+   * One array of all employees will be created
+   * This array will be saved in global state
+   * This will allow for access to employee data in other components: EmployeeProfile,
+   */
+
+  // uncomment below
+  // const {
+  //   data: salariedEmployeeAddresses, // address[]
+  //   isError,
+  //   isLoading,
+  // } = useContractRead({
+  //   address: process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS,
+  //   abi: payrollContractAbi,
+  //   functionName: "getSalariedEmployees",
+  //   chainId: Number(chainId),
+  // });
+
+  // const {
+  //   data: hourlyEmployeeAddresses, // address[]
+  //   isError,
+  //   isLoading,
+  // } = useContractRead({
+  //   address: process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS,
+  //   abi: payrollContractAbi,
+  //   functionName: "getHourlyEmployees",
+  //   chainId: Number(chainId),
+  // });
+
+  // match each employee address with corresponding employee in dummy data
+  // function getEmployeesFromDB() {
+  // // ...
+  // }
+  /*-------------------------------------*/
 
   // useEffect(() => {
   //   dispatch(getLeadsContent());
@@ -50,6 +109,10 @@ function Employees() {
   };
 
   const deleteCurrentLead = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, index: number) => {
+    /*-------------------------------------*/
+    // Kaz & Trevor
+    // this function will be responsible for deleting an employee
+    /*-------------------------------------*/
     e.stopPropagation();
 
     dispatch(

@@ -30,6 +30,7 @@ function EmployeeProfile({ id }: { id: string }) {
   // const dispatch = useMyDispatch();
 
   function getEmployee(id: string) {
+    // Eventually: pull global employee state, filter, find, and pass into EditProfile & ViewProfile
     const employee = EMPLOYEES.filter(e => e.id === id)[0];
     return employee;
   }
@@ -38,7 +39,6 @@ function EmployeeProfile({ id }: { id: string }) {
     setEditMode(prev => !prev);
   }
 
-  // Call API to update profile settings changes
   // const updateProfile = () => {
   //   dispatch(showNotification({ message: "Profile Updated", status: 1 }));
   // };
