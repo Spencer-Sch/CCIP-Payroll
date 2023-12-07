@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { Abi, Address, parseEther } from "viem";
+import PayrollFactory from "../../../../hardhat/artifacts/contracts/PayrollFactory.sol/PayrollFactory.json";
+import { Address, parseEther } from "viem";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 import ErrorText from "~~/components/dash-wind/components/Typography/ErrorText";
 import { Address as AddressDisplay } from "~~/components/scaffold-eth/Address";
@@ -10,7 +11,7 @@ interface props {
 }
 
 const payrollFactoryAddress = "";
-const payrollFactoryABI: Abi = [];
+const payrollFactoryABI = PayrollFactory.abi;
 
 export default function DeployForm({ ownerAddress }: props) {
   const { config } = usePrepareContractWrite({
