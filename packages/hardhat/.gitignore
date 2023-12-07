@@ -15,3 +15,5 @@ artifacts-zk
 cache-zk
 
 deployments
+
+yarn.lock
