@@ -13,6 +13,7 @@ import { openModal } from "../common/modalSlice";
 // import { useContractRead } from "wagmi";
 
 /*-------------------------------------*/
+
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import {
   /*MyState,*/
@@ -51,6 +52,7 @@ function Employees() {
   // dummy employee data
   const [employees] = useState(EMPLOYEES);
   /*-------------------------------------*/
+
   // const {} = useMySelector((state: MyState) => state.employees);
   const dispatch = useMyDispatch();
 
@@ -113,6 +115,7 @@ function Employees() {
     // Kaz & Trevor
     // this function will be responsible for deleting an employee
     /*-------------------------------------*/
+
     e.stopPropagation();
 
     dispatch(
