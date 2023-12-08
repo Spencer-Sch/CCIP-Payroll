@@ -17,7 +17,8 @@ import Squares2X2Icon from "@heroicons/react/24/outline/Squares2X2Icon";
 // import TableCellsIcon from "@heroicons/react/24/outline/TableCellsIcon";
 import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import UsersIcon from "@heroicons/react/24/outline/UsersIcon";
-import WalletIcon from "@heroicons/react/24/outline/WalletIcon";
+
+// import WalletIcon from "@heroicons/react/24/outline/WalletIcon";
 
 const iconClasses = `h-6 w-6`;
 const submenuIconClasses = `h-5 w-5`;
@@ -77,12 +78,12 @@ export const adminRoutes = [
       //   className: submenuIconClasses,
       //   name: "Profile", // name that appear in Sidebar
       // },
-      {
-        path: "/dapp/settings-billing",
-        icon: WalletIcon,
-        className: submenuIconClasses,
-        name: "Billing",
-      },
+      // {
+      //   path: "/dapp/settings-billing",
+      //   icon: WalletIcon,
+      //   className: submenuIconClasses,
+      //   name: "Billing",
+      // },
       // {
       //   path: "/dapp/settings-team", // url
       //   icon: UsersIcon, // icon component
