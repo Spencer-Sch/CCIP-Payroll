@@ -19,7 +19,7 @@ interface TopSideButtonsProps {
 const TopSideButtons = ({ removeFilter, applyFilter, applySearch }: TopSideButtonsProps) => {
   const [filterParam, setFilterParam] = useState("");
   const [searchText, setSearchText] = useState("");
-  const locationFilters = ["Paris", "London", "Canada", "Peru", "Tokyo"];
+  const statusFilters = ["paid", "pending"];
 
   const showFiltersAndApply = (params: string) => {
     applyFilter(params);
@@ -54,11 +54,11 @@ const TopSideButtons = ({ removeFilter, applyFilter, applySearch }: TopSideButto
           <FunnelIcon className="w-5 mr-2" />
           Filter
         </label>
-        <ul tabIndex={0} className="dropdown-content menu p-2 text-sm shadow bg-base-100 rounded-box w-52">
-          {locationFilters.map((l, k) => {
+        <ul tabIndex={0} className="dropdown-content menu p-2 text-sm shadow bg-base-100 rounded-box w-52 z-[100]">
+          {statusFilters.map((s, k) => {
             return (
               <li key={k}>
-                <a onClick={() => showFiltersAndApply(l)}>{l}</a>
+                <a onClick={() => showFiltersAndApply(s)}>{s}</a>
               </li>
             );
           })}
