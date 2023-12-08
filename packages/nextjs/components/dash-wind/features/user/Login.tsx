@@ -6,15 +6,15 @@ import InputText from "../../components/Input/InputText";
 import ErrorText from "../../components/Typography/ErrorText";
 import { UpdateFormValues } from "../../types/FormTypes";
 import LandingIntro from "./LandingIntro";
+import { Address, createWalletClient, custom } from "viem";
+import { polygonMumbai } from "viem/chains";
 // import { Address, createWalletClient, custom } from "viem";
 // import { polygonMumbai } from "viem/chains";
 import { useContractRead } from "wagmi";
-
 import {
   /*setIsAdmin,*/
   setIsConnected,
 } from "~~/auth/authSlice";
-
 import { web3auth } from "~~/auth/web3auth";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 
@@ -165,13 +165,11 @@ function Login() {
 
           return;
         }
-
       }
     } catch (error) {
       console.error(error);
     }
   }
-
 
   // async function determineIfAccountIsAdmin() {
   //   // set loading === true ???
@@ -180,7 +178,6 @@ function Login() {
   //     console.error("from determineIfAccountIsAdmin - address is undefined");
   //     return;
   //   }
-
 
   //   if (!owner) {
   //     console.error("From determineIfAccountIsAdmin: ownerData from Payroll Contract is undefined");
@@ -214,7 +211,6 @@ function Login() {
     console.log("user address: ", userAddress);
     return userAddress as Address;
   }
-
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
