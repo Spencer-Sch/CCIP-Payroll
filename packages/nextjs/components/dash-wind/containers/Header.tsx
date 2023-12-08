@@ -9,7 +9,7 @@ import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
-import { setIsConnected } from "~~/auth/authSlice";
+import { setIsAdmin, setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 // import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
@@ -18,6 +18,7 @@ import { Address } from "~~/components/web-3-crew/Address";
 function Header() {
   const dispatch = useMyDispatch();
   const { noOfNotifications, pageTitle } = useMySelector((state: MyState) => state.header);
+  const { isAdmin } = useMySelector((state: MyState) => state.auth);
   const [currentTheme, setCurrentTheme] = useState(
     typeof window !== "undefined" ? localStorage.getItem("theme") : null,
   );
@@ -46,6 +47,10 @@ function Header() {
     router.push("/login");
   }
 
+  function toggleIsAdmin() {
+    dispatch(setIsAdmin({ isAdmin: !isAdmin }));
+  }
+
   return (
     <>
       <div className="navbar flex justify-between bg-base-100  z-10 shadow-md ">
@@ -58,6 +63,9 @@ function Header() {
         </div>
 
         <div className="order-last">
+          <button className="btn btn-ghost mr-4  btn-circle" onClick={() => toggleIsAdmin()}>
+            Toggle isAdmin
+          </button>
           {/* Multiple theme selection, uncomment this if you want to enable multiple themes selection, 
                 also includes corporate and retro themes in tailwind.config file */}
 
