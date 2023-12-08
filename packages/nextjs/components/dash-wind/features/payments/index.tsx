@@ -5,7 +5,7 @@ import TitleCard from "../../components/Cards/TitleCard";
 import SearchBar from "../../components/Input/SearchBar";
 import { RECENT_PAYMENTS } from "../../utils/dummyData";
 // import { showNotification } from "../common/headerSlice";
-import moment from "moment";
+// import moment from "moment";
 // import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 import FunnelIcon from "@heroicons/react/24/outline/FunnelIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
@@ -75,21 +75,27 @@ const TopSideButtons = ({ removeFilter, applyFilter, applySearch }: TopSideButto
 function Payments() {
   const [payments, setPayments] = useState(RECENT_PAYMENTS);
 
+  const getPaymentStatus = (status: string) => {
+    if (status === "Paid") return <div className="badge badge-success">{status}</div>;
+    if (status === "Pending") return <div className="badge badge-primary">{status}</div>;
+    else return <div className="badge badge-ghost">{status}</div>;
+  };
+
   const removeFilter = () => {
     setPayments(RECENT_PAYMENTS);
   };
 
   const applyFilter = (params: string) => {
-    const filteredTransactions = RECENT_PAYMENTS.filter(t => {
-      return t.location == params;
+    const filteredPayments = RECENT_PAYMENTS.filter(p => {
+      return p.status.toLowerCase() == params.toLowerCase();
     });
-    setPayments(filteredTransactions);
+    setPayments(filteredPayments);
   };
 
   // Search according to name
   const applySearch = (value: string) => {
-    const filteredPayments = RECENT_PAYMENTS.filter(t => {
-      return t.email.toLowerCase().includes(value.toLowerCase()) || t.email.toLowerCase().includes(value.toLowerCase());
+    const filteredPayments = RECENT_PAYMENTS.filter(p => {
+      return p.name.toLowerCase().includes(value.toLowerCase()) || p.name.toLowerCase().includes(value.toLowerCase());
     });
     setPayments(filteredPayments);
   };
@@ -109,10 +115,12 @@ function Payments() {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Email Id</th>
-                <th>Location</th>
+                <th>To Wallet</th>
+                <th>Invoice No</th>
+                <th>Invoice Generated On</th>
                 <th>Amount</th>
-                <th>Payment Date</th>
+                <th>Status</th>
+                <th>Invoice Paid On</th>
               </tr>
             </thead>
             <tbody>
@@ -131,10 +139,12 @@ function Payments() {
                         </div>
                       </div>
                     </td>
-                    <td>{l.email}</td>
-                    <td>{l.location}</td>
+                    <td>{l.wallet}</td>
+                    <th>{l.invoiceNo}</th>
+                    <th>{l.generatedOn}</th>
                     <td>${l.amount}</td>
-                    <td>{moment(l.date).format("D MMM")}</td>
+                    <td>{getPaymentStatus(l.status)}</td>
+                    <td>{l.paidOn}</td>
                   </tr>
                 );
               })}
