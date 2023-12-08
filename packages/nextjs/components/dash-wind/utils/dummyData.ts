@@ -71,7 +71,7 @@ export const CALENDAR_INITIAL_EVENTS = [
     endTime: moment().add(16, "d").endOf("day"),
   },
 ];
-export const RECENT_TRANSACTIONS = [
+export const RECENT_PAYMENTS = [
   {
     name: "Alex",
     avatar: "https://reqres.in/img/faces/1-image.jpg",

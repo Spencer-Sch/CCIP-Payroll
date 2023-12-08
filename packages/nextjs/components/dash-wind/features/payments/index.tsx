@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 // import Image from "next/image";
 import TitleCard from "../../components/Cards/TitleCard";
 import SearchBar from "../../components/Input/SearchBar";
-import { RECENT_TRANSACTIONS } from "../../utils/dummyData";
+import { RECENT_PAYMENTS } from "../../utils/dummyData";
 // import { showNotification } from "../common/headerSlice";
 import moment from "moment";
 // import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
@@ -72,32 +72,32 @@ const TopSideButtons = ({ removeFilter, applyFilter, applySearch }: TopSideButto
   );
 };
 
-function Transactions() {
-  const [trans, setTrans] = useState(RECENT_TRANSACTIONS);
+function Payments() {
+  const [payments, setPayments] = useState(RECENT_PAYMENTS);
 
   const removeFilter = () => {
-    setTrans(RECENT_TRANSACTIONS);
+    setPayments(RECENT_PAYMENTS);
   };
 
   const applyFilter = (params: string) => {
-    const filteredTransactions = RECENT_TRANSACTIONS.filter(t => {
+    const filteredTransactions = RECENT_PAYMENTS.filter(t => {
       return t.location == params;
     });
-    setTrans(filteredTransactions);
+    setPayments(filteredTransactions);
   };
 
   // Search according to name
   const applySearch = (value: string) => {
-    const filteredTransactions = RECENT_TRANSACTIONS.filter(t => {
+    const filteredPayments = RECENT_PAYMENTS.filter(t => {
       return t.email.toLowerCase().includes(value.toLowerCase()) || t.email.toLowerCase().includes(value.toLowerCase());
     });
-    setTrans(filteredTransactions);
+    setPayments(filteredPayments);
   };
 
   return (
     <>
       <TitleCard
-        title="Recent Transactions"
+        title="Payment History"
         topMargin="mt-2"
         TopSideButtons={
           <TopSideButtons applySearch={applySearch} applyFilter={applyFilter} removeFilter={removeFilter} />
@@ -112,11 +112,11 @@ function Transactions() {
                 <th>Email Id</th>
                 <th>Location</th>
                 <th>Amount</th>
-                <th>Transaction Date</th>
+                <th>Payment Date</th>
               </tr>
             </thead>
             <tbody>
-              {trans.map((l, k) => {
+              {payments.map((l, k) => {
                 return (
                   <tr key={k}>
                     <td>
@@ -146,4 +146,4 @@ function Transactions() {
   );
 }
 
-export default Transactions;
+export default Payments;

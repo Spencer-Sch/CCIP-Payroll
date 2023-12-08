@@ -36,11 +36,17 @@ export const adminRoutes = [
     name: "Employees", // name that appear in Sidebar
   },
   {
-    path: "/dapp/transactions", // url
+    path: "/dapp/payments", // url
     icon: CurrencyDollarIcon, // icon component
     className: iconClasses,
-    name: "Transactions", // name that appear in Sidebar
+    name: "Payments", // name that appear in Sidebar
   },
+  // {
+  //   path: "/dapp/transactions", // url
+  //   icon: CurrencyDollarIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Transactions", // name that appear in Sidebar
+  // },
   // {
   //   path: "/dapp/charts", // url
   //   icon: ChartBarIcon, // icon component
@@ -100,11 +106,17 @@ export const userRoutes = [
   //   name: "Leads", // name that appear in Sidebar
   // },
   {
-    path: "/dapp/transactions", // url
+    path: "/dapp/payments", // url
     icon: CurrencyDollarIcon, // icon component
     className: iconClasses,
-    name: "Transactions", // name that appear in Sidebar
+    name: "Payments", // name that appear in Sidebar
   },
+  // {
+  //   path: "/dapp/transactions", // url
+  //   icon: CurrencyDollarIcon, // icon component
+  //   className: iconClasses,
+  //   name: "Transactions", // name that appear in Sidebar
+  // },
   // {
   //   path: "/dapp/charts", // url
   //   icon: ChartBarIcon, // icon component
@@ -135,12 +147,12 @@ export const userRoutes = [
         className: submenuIconClasses,
         name: "Profile", // name that appear in Sidebar
       },
-      {
-        path: "/dapp/settings-billing",
-        icon: WalletIcon,
-        className: submenuIconClasses,
-        name: "Billing",
-      },
+      // {
+      //   path: "/dapp/settings-billing",
+      //   icon: WalletIcon,
+      //   className: submenuIconClasses,
+      //   name: "Billing",
+      // },
       // {
       //   path: "/dapp/settings-team", // url
       //   icon: UsersIcon, // icon component
