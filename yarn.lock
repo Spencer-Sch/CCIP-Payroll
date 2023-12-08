@@ -2290,6 +2290,7 @@ __metadata:
     "@uniswap/v2-sdk": ^3.0.1
     "@web3auth/base": ^7.2.0
     "@web3auth/modal": ^7.2.0
+    "@web3auth/web3auth-wagmi-connector": ^5.0.1
     autoprefixer: ^10.4.12
     axios: ^1.6.2
     blo: ^1.0.1
@@ -4780,6 +4781,23 @@ __metadata:
     "@walletconnect/types": ^2.x
     "@walletconnect/utils": ^2.x
   checksum: 10d3b5b4ed8651275be9b880d1d38e61726dcb287e2baca19dfcaae7144cd53f8dc46aea802be022c46c9ed7fd15ae5daa4e39c1a3457e4ffc1f368d52340a90
+  languageName: node
+  linkType: hard
+
+"@web3auth/web3auth-wagmi-connector@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@web3auth/web3auth-wagmi-connector@npm:5.0.1"
+  peerDependencies:
+    "@wagmi/core": ^1.x
+    "@web3auth/base": ^7.x
+    "@web3auth/modal": ^7.x
+    "@web3auth/no-modal": ^7.x
+    "@web3auth/openlogin-adapter": ^7.x
+    viem: ^1.x
+  peerDependenciesMeta:
+    "@web3auth/modal":
+      optional: true
+  checksum: 1c3d39cab0ff298ec10fe1061465f66a794a36b4d62261b5abf63879fef555005b7e44b6c5e7253b2e9d57b777671bef60f6564f9b2cb2399f92ef3bf9519372
   languageName: node
   linkType: hard
 
