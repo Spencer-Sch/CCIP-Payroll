@@ -58,7 +58,6 @@ function Login() {
   const payrollABI = Payroll.abi;
 
   /*-------------------------------------*/
-  // Kaz & Trevor
   // getOwner address to test against user's address
   // need to see what shape `owner` will be on return
   // contract interaction calls isOwner()
