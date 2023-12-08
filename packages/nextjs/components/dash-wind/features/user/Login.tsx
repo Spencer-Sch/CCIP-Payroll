@@ -10,13 +10,14 @@ import { Address, createWalletClient, custom } from "viem";
 import { polygonMumbai } from "viem/chains";
 // import { Address, createWalletClient, custom } from "viem";
 // import { polygonMumbai } from "viem/chains";
-import { useContractRead } from "wagmi";
+import { useAccount, useConnect, useContractRead } from "wagmi";
 import {
+  setIsAdmin,
   /*setIsAdmin,*/
   setIsConnected,
 } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
-import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
+import { useMyDispatch } from "~~/components/dash-wind/app/store";
 
 //import { get } from "http";
 
@@ -34,12 +35,14 @@ function Login() {
   // const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginObj, setLoginObj] = useState(INITIAL_LOGIN_OBJ);
-  const { isConnected } = useMySelector((state: MyState) => state.auth);
+  // const { isConnected } = useMySelector((state: MyState) => state.auth);
   const router = useRouter();
   const dispatch = useMyDispatch();
   //const userAddress = getAccounts();
   // state to store user address once it is fetched
   const [userAddress, setUserAddress] = useState<string | null>(null);
+  const { address: wagmiAddress, isConnected: wagmiIsConnected } = useAccount();
+  const { connect, connectors, error } = useConnect();
 
   useEffect(() => {
     async function fetchAddress() {
@@ -72,126 +75,49 @@ function Login() {
   }) as { data: boolean | undefined };
 
   console.log("is owner: ", isOwner);
-  console.log("user address contract read: ", [getAccounts()]);
+  console.log("wagmi account address: ", wagmiAddress);
+  console.log("wagmi account isConnected: ", wagmiIsConnected);
 
-  useEffect(() => {
-    if (typeof isOwner !== "undefined") {
-      // Ensure the value is not undefined
-      if (isOwner) {
-        // Redirect to owner's dashboard
-        router.push("/dapp/dashboard");
-      } else {
-        // Redirect to employee or general user dashboard
-        router.push("/dapp/dashboard");
-      }
-    }
-  }, [isOwner, router]);
-
-  /*-------------------------------------*/
-
-  /*-------------------------------------*/
-  // Kaz & Trevor
-  //
-  // const {
-  //   data: isEmployee,
-  //   // isError,
-  //   // isLoading,
-  // } = useContractRead({
-  //   address: process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS,
-  //   abi: payrollABI,
-  //   functionName: "doesEmployeeExist",
-  //   args: [
-  //     /* problem: figure out how to getAccount() address here */
-  //     userAddress
-  //   ],
-  //   chainId: Number(chainId),
-  // });
-  /*-------------------------------------*/
-
-  // // Web3Auth
-  // async function login() {
-  //   if (isConnected) {
-  //     // await determineIfAccountIsAdmin();
-  //     // if (!isEmployee) {
-  //     //   //until the hook is working, this is going to prevent us from being directed to the dashboard
-  //     //   return;
-  //     // }
-  //     router.push("/dapp/dashboard");
-  //     return;
-  //   }
-
-  //   try {
-  //     await web3auth.connect();
-  //     if (web3auth.connected) {
-  //       dispatch(setIsConnected({ isConnected: true }));
-  //       //const userAddress = await getAccounts(); // Retrieve user's address
-
-  //      await determineIfAccountIsAdmin();
-  //      if (!isEmployee) {
-  //        // until the hook is working, this is going to prevent us from being directed to the dashboard
-  //         return;
-  //       }
-  //       router.push("/dapp/dashboard");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
-  // Web3Auth
+  // Wagmi Connect
   async function login() {
-    if (isConnected) {
-      // await determineIfAccountIsAdmin();
+    if (web3auth.connected) {
+      dispatch(setIsConnected({ isConnected: true }));
       if (!isOwner) {
         //until the hook is working, this is going to prevent us from being directed to the dashboard
+        dispatch(setIsAdmin({ isAdmin: false }));
         router.push("/dapp/dashboard");
-
         return;
       }
+      dispatch(setIsAdmin({ isAdmin: true }));
+      router.push("/dapp/dashboard");
       return;
     }
 
     try {
       await web3auth.connect();
+      connect({ connector: connectors[6] });
+      if (error) {
+        console.error("wagmi connect error: from Login - login(): ", error);
+      }
       if (web3auth.connected) {
         dispatch(setIsConnected({ isConnected: true }));
-
-        //const userAddress = await getAccounts(); // Retrieve user's address
-
-        // await determineIfAccountIsAdmin();
+        const address = await getAccounts(); // Retrieve user's address
+        if (address) {
+          setUserAddress(address);
+        }
         if (!isOwner) {
           // until the hook is working, this is going to prevent us from being directed to the dashboard
+          dispatch(setIsAdmin({ isAdmin: false }));
           router.push("/dapp/dashboard");
-
           return;
         }
+        dispatch(setIsAdmin({ isAdmin: true }));
+        router.push("/dapp/dashboard");
       }
     } catch (error) {
       console.error(error);
     }
   }
-
-  // async function determineIfAccountIsAdmin() {
-  //   // set loading === true ???
-  //   const userAddress = getAccounts();
-  //   if (!userAddress) {
-  //     console.error("from determineIfAccountIsAdmin - address is undefined");
-  //     return;
-  //   }
-
-  //   if (!owner) {
-  //     console.error("From determineIfAccountIsAdmin: ownerData from Payroll Contract is undefined");
-  //     return;
-  //   }
-
-  //   /*-------------------------------------*/
-  //   // Kaz & Trevor
-  //   // need to see what shape `owner` will be on return
-  //   const isAdmin = userAddress === owner ? true : false;
-  //   dispatch(setIsAdmin({ isAdmin: isAdmin }));
-  //   /*-------------------------------------*/
-  //   // set loading === false ???
-  // }
 
   // func to grab the connected wallet address
   async function getAccounts() {

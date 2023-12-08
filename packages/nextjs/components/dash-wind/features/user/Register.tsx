@@ -3,6 +3,7 @@ import { UpdateFormValues } from "../../types/FormTypes";
 import LandingIntro from "./LandingIntro";
 import { Address, createWalletClient, custom } from "viem";
 import { polygonMumbai } from "viem/chains";
+import { useConnect } from "wagmi";
 import { setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 import { useMyDispatch } from "~~/components/dash-wind/app/store";
@@ -22,12 +23,17 @@ function Register() {
   const [registerState, setRegisterState] = useState<RegisterState>("init");
   const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
   const [walletAddress, setWalletAddress] = useState<Address | null>(null);
+  const { connect, connectors, error } = useConnect();
 
   const dispatch = useMyDispatch();
-  //@note is this working? working for register page?
+
   async function login() {
     try {
       await web3auth.connect();
+      connect({ connector: connectors[6] });
+      if (error) {
+        console.error("wagmi connect error: from Register - login(): ", error);
+      }
       if (web3auth.connected) {
         dispatch(setIsConnected({ isConnected: true }));
       }
