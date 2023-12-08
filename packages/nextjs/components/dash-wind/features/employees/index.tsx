@@ -10,10 +10,9 @@ import { openModal } from "../common/modalSlice";
 /*-------------------------------------*/
 // Kaz & Trevor
 // uncomment
-// import { useContractRead } from "wagmi";
+//import { useContractRead } from "wagmi";
 
 /*-------------------------------------*/
-
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import {
   /*MyState,*/

@@ -61,6 +61,7 @@ function Header() {
 
     // Get user's public address
     const [address] = await client.getAddresses();
+    //console.log("user address: ", address);
     return address as Address;
   }
 

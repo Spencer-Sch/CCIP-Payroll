@@ -24,7 +24,7 @@ function Register() {
   const [walletAddress, setWalletAddress] = useState<Address | null>(null);
 
   const dispatch = useMyDispatch();
-
+  //@note is this working? working for register page?
   async function login() {
     try {
       await web3auth.connect();
@@ -49,6 +49,8 @@ function Register() {
 
     // Get user's public address
     const [address] = await client.getAddresses();
+    console.log("user address: ", address);
+
     return address;
   }
 
@@ -61,9 +63,12 @@ function Register() {
       setRegisterState("loading");
       console.log("logging in company...");
       await login();
-      // Account Abstraction goes here...?
-      console.log("getting account address...");
+      // Account Abstraction goes here...? -- kinda is with login
+      // grab account address
       const address = await getAccounts();
+      console.log("connected address: ", address);
+
+      console.log("getting account address...");
       if (address) {
         // Prompt user to fund wallet?
         setWalletAddress(address);

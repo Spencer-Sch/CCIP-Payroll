@@ -2,65 +2,32 @@ import React from "react";
 import Link from "next/link";
 import PayrollFactory from "../../../../hardhat/artifacts/contracts/PayrollFactory.sol/PayrollFactory.json";
 import { Address, parseEther } from "viem";
-import { useContractWrite } from "wagmi";
-import { web3auth } from "~~/auth/web3auth";
+import { useContractWrite, usePrepareContractWrite } from "wagmi";
 import ErrorText from "~~/components/dash-wind/components/Typography/ErrorText";
 import { Address as AddressDisplay } from "~~/components/scaffold-eth/Address";
-
-//import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 
 interface props {
   ownerAddress: Address | null;
 }
-// Check if the user is connected
-const isConnected = web3auth.connected;
-const payrollFactoryAddress = "0xfe44aB0B966E57F126130BE6401546c7351484ad";
+
+const payrollFactoryAddress = "";
 const payrollFactoryABI = PayrollFactory.abi;
 
 export default function DeployForm({ ownerAddress }: props) {
-  //const { data: contractData } = useDeployedContractInfo("PayrollFactory");
-
-  /*-------------------------------------*/
-  // Kaz & Trevor -- think this is the right way to do it
-  // but running in browser it seems to always be looking for the connected address
-  // see no action in the terminal when the button is clicked
-  // deploy company contract after registration of account
-  // const { config } = usePrepareContractWrite({
-  //   address: payrollFactoryAddress,
-  //   // abi: contractData?.abi,
-  //   abi: payrollFactoryABI,
-  //   functionName: "deployPayrollAndTokenTransferor",
-  //   value: parseEther("1", "wei"),
-  //   onSuccess(data) {
-  //     console.log("contract deployed! Data: ", data); //will data be the contract addresses?
-  //   },
-  //   onError(error) {
-  //     console.error("contract deploy error!", error); //error message
-  //   },
-  // });
-
-  //console.log("config: ", config);
-
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const { config } = usePrepareContractWrite({
     address: payrollFactoryAddress,
     abi: payrollFactoryABI,
     functionName: "deployPayrollAndTokenTransferor",
+    value: parseEther("1", "wei"),
+    onSuccess(data) {
+      console.log("contract deployed! Data: ", data);
+    },
+    onError(error) {
+      console.error("contract deploy error!", error);
+    },
   });
-  console.log("write: ", write);
-  console.log("data: ", data);
 
-  // Function to handle button click
-  const handleDeployClick = () => {
-    if (isConnected) {
-      write({
-        args: [],
-        //from: ownerAddress,
-        value: parseEther("1", "wei"),
-      });
-    } else {
-      console.log("Wallet not connected");
-    }
-  };
+  const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
   return (
     <div className="py-24 px-10 relative">
@@ -74,14 +41,7 @@ export default function DeployForm({ ownerAddress }: props) {
             </div>
             {/* <button onClick={() => writeAsync()} className="btn mt-2 w-full btn-primary mb-4"> */}
             <button
-              // onClick={() =>
-              //   write({
-              //     args: [],
-              //     //from: ownerAddress,
-              //     value: parseEther("1", "wei"),
-              //   })
-              // }
-              onClick={handleDeployClick}
+              onClick={() => write?.()}
               disabled={isLoading || isSuccess ? true : false}
               className={"btn mt-2 w-full btn-primary mb-4" + (isLoading ? " loading" : "")}
             >
