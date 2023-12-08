@@ -527,8 +527,8 @@ ITokenTransferor public ccip;
         }
     }
 
-    function getOwner() public view returns (address){
-        return owner();
+    function isOwner(address _address) public view returns (bool){
+        return _address == owner();
     }   
 
     function getEmployeePaymentSplits(address _employeeAddress) public view returns (PaymentSplit memory){
