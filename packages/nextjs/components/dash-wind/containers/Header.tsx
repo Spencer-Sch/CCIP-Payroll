@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { openRightDrawer } from "../features/common/rightDrawerSlice";
 import { RIGHT_DRAWER_TYPES } from "../utils/globalConstantUtil";
 import { themeChange } from "theme-change";
+import { Address, createWalletClient, custom } from "viem";
+import { polygonMumbai } from "viem/chains";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
@@ -13,7 +15,7 @@ import { setIsAdmin, setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 // import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
-import { Address } from "~~/components/web-3-crew/Address";
+import { Address as AddressDisplay } from "~~/components/web-3-crew/Address";
 
 function Header() {
   const dispatch = useMyDispatch();
@@ -22,7 +24,18 @@ function Header() {
   const [currentTheme, setCurrentTheme] = useState(
     typeof window !== "undefined" ? localStorage.getItem("theme") : null,
   );
+  const [address, setAddress] = useState<Address | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    async function getAddress() {
+      const address = await getAccounts();
+      if (address) {
+        setAddress(address);
+      }
+    }
+    getAddress();
+  }, []);
 
   useEffect(() => {
     themeChange(false);
@@ -35,6 +48,23 @@ function Header() {
     }
     // 👆 false parameter is required for react project
   }, [currentTheme]);
+
+  async function getAccounts() {
+    if (!web3auth.provider) {
+      console.log("from login - getAccounts: provider not defined");
+      return;
+    }
+    const client = createWalletClient({
+      // account: privateKeyToAccount('0x...'); // from viem
+      chain: polygonMumbai,
+      transport: custom(web3auth.provider),
+    });
+
+    // Get user's public address
+    const [address] = await client.getAddresses();
+    //console.log("user address: ", address);
+    return address as Address;
+  }
 
   // Opening right sidebar for notification
   const openNotification = () => {
@@ -107,12 +137,7 @@ function Header() {
             <label tabIndex={0} className="btn btn-ghost">
               <div className="flex justify-center items-center">
                 {/* Wallet Address Display */}
-                <Address
-                  address="0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770"
-                  disableAddressLink={true}
-                  format="short"
-                  size="base"
-                />
+                <AddressDisplay address={address?.toString()} disableAddressLink={true} format="short" size="base" />
               </div>
             </label>
             <ul

@@ -1,10 +1,27 @@
 // import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
 
+//import { Web3AuthConnector } from "@web3auth/web3auth-wagmi-connector";
+
 // import { createWalletClient, custom } from "viem";
 // import { polygonMumbai } from "viem/chains";
 // import { AuthProvider, setAuthProvider, setIsConnected } from "~~/auth/authSlice";
 // import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
+
+// set up your web3auth instance with all the features you want
+// const web3AuthInstance = new Web3Auth({
+//   clientId: "BM0SLNkhMCfIygw0Xi79dG6qbWGMN0o0mEeDjRT0dxlP3BEok9pnu5aqxCNfj2TZ9XT7sQaXm0ltuWbCQ1tsRNI",
+//   chainConfig: {
+//     chainNamespace: "eip155",
+//     chainId: "0x13881", // Mumbai
+//     rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
+//     displayName: "Mumbai Testnet",
+//     blockExplorer: "https://mumbai.polygonscan.com/",
+//     ticker: "MATIC",
+//     tickerName: "Polygon",
+//   },
+//   web3AuthNetwork: "sapphire_mainnet",
+// });
 
 export const web3auth = new Web3Auth({
   clientId: "BM0SLNkhMCfIygw0Xi79dG6qbWGMN0o0mEeDjRT0dxlP3BEok9pnu5aqxCNfj2TZ9XT7sQaXm0ltuWbCQ1tsRNI", // Get your Client ID from the Web3Auth Dashboard
