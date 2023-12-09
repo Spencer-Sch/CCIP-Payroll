@@ -10,6 +10,57 @@ import { RECENT_PAYMENTS } from "../../utils/dummyData";
 import FunnelIcon from "@heroicons/react/24/outline/FunnelIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 
+// uncomment @todo
+//import { useContractWrite } from "wagmi";
+//import Payroll from "../../../../../hardhat/artifacts/contracts/Payroll.sol/Payroll.json";
+
+//@todo add buttons to pay single employee, pay all salary employees, pay all hourly employees, and pay all employees?
+
+// const chainId = process.env.NEXT_PUBLIC_TARGET_LOCAL_CHAIN
+//   ? process.env.NEXT_PUBLIC_LOCAL_CHAIN_ID
+//   : process.env.NEXT_PUBLIC_TESTNET_CHAIN_ID;
+
+// const payrollABI = Payroll.abi;
+// const payrollAddress = process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS;
+
+//WAGMI HOOKS @todo
+
+// paySingleEmployee args: address _employeeAddress, uint8 hoursWorked - will be 0 if salary
+// const { data, isLoading, isSuccess, write } = useContractWrite({
+//   address: payrollAddress,
+//   abi: payrollABI,
+//   functionName: "paySingleEmployee",
+//   args: [employeeAddress, hoursWorked],
+// });
+
+// Pay All Salary
+// from Payroll: function payAllSallaryEmployees() public onlyOwner {}
+// const { data, isLoading, isSuccess, write } = useContractWrite({
+//   address: payrollAddress,
+//   abi: payrollABI,
+//   functionName: "payAllSallaryEmployees",
+
+// Pay All Hourly
+// from Payroll: function payAllHourlyEmployees(uint8[] calldata _hoursWorked) public onlyOwner {}
+// the array of hours worked needs to be the same length as the number of hourly employees
+// And it must match up with the order of the employees in the hourlyEmployees array so the correct employee gets the correct pament
+// const { data, isLoading, isSuccess, write } = useContractWrite({
+//   address: payrollAddress,
+//   abi: payrollABI,
+//   functionName: "payAllHourlyEmployees",
+//   args: [hoursWorked], // this needs to be an array of uint8
+// });
+
+// Pay All Employees
+// from Payroll: function payAllEmployees(uint8[] calldata _hoursWorked) external onlyOwner {}
+// this function calls payAllSallaryEmployees first and payAllHourlyEmployees. The array of hours worked needs to be the same length as the number of hourly employees and match up with the correct employee
+// const { data, isLoading, isSuccess, write } = useContractWrite({
+//   address: payrollAddress,
+//   abi: payrollABI,
+//   functionName: "payAllEmployees",
+//   args: [hoursWorked], // this needs to be an array of uint8
+// });
+
 interface TopSideButtonsProps {
   applySearch: (value: string) => void;
   applyFilter: (params: string) => void;

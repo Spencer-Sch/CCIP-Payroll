@@ -31,3 +31,24 @@ DeployForm
 - just using useContractWrite was able to click button and make action got this error in browser console
     next-dev.js:20 ConnectorNotFoundError: Connector not found at writeContract (chunk-TSH6VVF4.js:2348:1)
 
+## 12/8
+
+deployed payroll 0x689946c87d38c99dc516c4ba4639023e247bf6ea
+12/9 pr - 0xb1476e9c2e452ec455b6a64a05e416007639678b
+deployed TT 0x6898d690e7060465aa754528a51e645745921cc5
+12/9 tt - 0xc0ea07f3a200978297ba44107c851150e701044e
+from google login 0x1aD394b0c57dbC57f16A5A54b4ccee436b678287
+
+List of polygon mumbai address all in my MM wallet (dev)
+acct 2 0x73672fe2cf2F3cD99865fE6F62fF34Ac011F7EB7
+acct 3 0x7F2313624e0d64d90954d4bcc7Af334Df124CFCe
+acct 6 0x300AE201869d43b9979aFe350d458E4bDD146526
+
+added notes and pseudo code/wagmi hooks for:
+- Employee to change wallet, and set their payment splits in dash-wind/features/settings/profilesettings/index
+- Multiple features( is employee, add employee, grab salary/hourly employees) in dash-wind/features/employees/index
+- Added hooks for all pay employee functions in dash-wind/features/payments
+
+## 12/9
+Deployed new factory addr 0x9C5EE054F0798fd0C36884f53901256Efb9294C6
+Needed to udate isOwner func to return a bool. previsouly i was calling owner() which returned an address. 
