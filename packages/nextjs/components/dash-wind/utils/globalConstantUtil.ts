@@ -13,5 +13,5 @@ export const RIGHT_DRAWER_TYPES = Object.freeze({
 });
 
 export const CONFIRMATION_MODAL_CLOSE_TYPES = Object.freeze({
-  LEAD_DELETE: "LEAD_DELETE",
+  EMPLOYEE_DELETE: "EMPLOYEE_DELETE",
 });

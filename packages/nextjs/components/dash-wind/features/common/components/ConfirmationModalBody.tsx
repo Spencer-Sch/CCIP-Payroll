@@ -1,5 +1,6 @@
 import { CONFIRMATION_MODAL_CLOSE_TYPES } from "../../../utils/globalConstantUtil";
-import { deleteLead } from "../../leads/leadSlice";
+// import { deleteLead } from "../../leads/leadSlice";
+import { deleteEmployee } from "../../employees/employeesSlice";
 import { showNotification } from "../headerSlice";
 // import axios from "axios";
 import { useMyDispatch } from "~~/components/dash-wind/app/store";
@@ -16,10 +17,10 @@ function ConfirmationModalBody({ extraObject, closeModal }: props) {
   const { message, type, index } = extraObject;
 
   const proceedWithYes = async () => {
-    if (type === CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE) {
+    if (type === CONFIRMATION_MODAL_CLOSE_TYPES.EMPLOYEE_DELETE) {
       // positive response, call api or dispatch redux function
-      dispatch(deleteLead({ index }));
-      dispatch(showNotification({ message: "Lead Deleted!", status: 1 }));
+      dispatch(deleteEmployee({ index }));
+      dispatch(showNotification({ message: "Employee Deleted!", status: 1 }));
     }
     closeModal();
   };

@@ -361,7 +361,7 @@ export const EMPLOYEES = [
     email: "alex@dashwind.com",
     id: "1",
     wallet: "0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770",
-    role: "Owner",
+    role: "Developer",
     joinedOn: moment(new Date())
       .add(-5 * 1, "days")
       .format("DD MMM YYYY"),

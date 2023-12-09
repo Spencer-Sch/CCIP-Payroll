@@ -10,6 +10,8 @@ export type Employee = {
   first_name: string;
   last_name: string;
   avatar: string;
+  is_salary: boolean | null;
+  pay_rate: number;
 };
 
 export interface EmployeeRootState {
@@ -36,6 +38,10 @@ export const employeesSlice = createSlice({
     employees: [] as Employee[],
   },
   reducers: {
+    setIsLoading: (state: EmployeeState, action: PayloadAction<{ value: boolean }>) => {
+      const { value } = action.payload;
+      state.isLoading = value;
+    },
     addNewEmployee: (
       state: EmployeeState,
       action: PayloadAction<{
@@ -46,6 +52,8 @@ export const employeesSlice = createSlice({
           first_name: string;
           last_name: string;
           avatar: string;
+          is_salary: boolean | null;
+          pay_rate: number;
         };
       }>,
     ) => {
@@ -73,6 +81,6 @@ export const employeesSlice = createSlice({
   // },
 });
 
-export const { addNewEmployee, deleteEmployee } = employeesSlice.actions;
+export const { addNewEmployee, deleteEmployee, setIsLoading } = employeesSlice.actions;
 
 export default employeesSlice.reducer;

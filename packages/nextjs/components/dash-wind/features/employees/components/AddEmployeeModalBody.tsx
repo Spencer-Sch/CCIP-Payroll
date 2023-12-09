@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Payroll from "../../../../../../hardhat/artifacts/contracts/Payroll.sol/Payroll.json";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { addNewEmployee } from "../employeesSlice";
+import { setIsLoading } from "../employeesSlice";
+import { useConnect, useContractWrite } from "wagmi";
 import { useMyDispatch } from "~~/components/dash-wind/app/store";
 import { UpdateFormValues } from "~~/components/dash-wind/types/FormTypes";
 
@@ -15,31 +17,86 @@ const INITIAL_EMPLOYEE_OBJ = {
   last_name: "",
   email: "",
   wallet: "",
+  is_salary: null,
+  pay_rate: 0,
 };
+
+const payrollAddress = process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS;
+const payrollABI = Payroll.abi;
 
 // function AddLeadModalBody({ closeModal, extraObject }) {
 function AddEmployeeModalBody({ closeModal }: props) {
   const dispatch = useMyDispatch();
+
+  const { connect, connectors, isSuccess: wagmiIsConnected } = useConnect();
   //   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [employeeObj, setEmployeeObj] = useState(INITIAL_EMPLOYEE_OBJ);
 
-  const saveNewLead = () => {
-    if (employeeObj.first_name.trim() === "") return setErrorMessage("First Name is required!");
-    else if (employeeObj.email.trim() === "") return setErrorMessage("Email id is required!");
-    else if (employeeObj.wallet.trim() === "") return setErrorMessage("Wallet Address is required!");
-    else {
-      const newEmployeeObj = {
-        id: 7,
-        email: employeeObj.email,
-        wallet: employeeObj.wallet,
-        first_name: employeeObj.first_name,
-        last_name: employeeObj.last_name,
-        avatar: "https://reqres.in/img/faces/1-image.jpg",
-      };
-      dispatch(addNewEmployee({ newEmployeeObj }));
+  useEffect(() => {
+    if (!wagmiIsConnected) connect({ connector: connectors[6] });
+  }, [wagmiIsConnected]);
+
+  const { isLoading, isSuccess, write } = useContractWrite({
+    address: payrollAddress,
+    abi: payrollABI,
+    functionName: "addEmployee",
+    args: [employeeObj.wallet, true, 52_000n],
+    onSuccess(data: any) {
+      console.log("addEmployee Data: ", data); //will data be the contract addresses?
+      dispatch(setIsLoading({ value: false }));
+    },
+    onError(error: any) {
+      console.error("addEmployee error: ", error); //error message
+    },
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      // const newEmployeeObj = {
+      //   id: 7,
+      //   // email: employeeObj.email,
+      //   email: "alex@honeybadgerhr.com",
+      //   wallet: employeeObj.wallet,
+      //   // first_name: employeeObj.first_name,
+      //   first_name: "Alex",
+      //   // last_name: employeeObj.last_name,
+      //   last_name: "Smith",
+      //   avatar: "https://reqres.in/img/faces/1-image.jpg",
+      //   is_salary: true,
+      //   pay_rate: 52_000,
+      // };
+      // dispatch(addNewEmployee({ newEmployeeObj }));
       dispatch(showNotification({ message: "New Employee Added!", status: 1 }));
       closeModal();
+    }
+  }, [isSuccess]);
+
+  const saveNewEmployee = () => {
+    // if (employeeObj.first_name.trim() === "") return setErrorMessage("First Name is required!");
+    // else if (employeeObj.email.trim() === "") return setErrorMessage("Email id is required!");
+    // else if (employeeObj.wallet.trim() === "") return setErrorMessage("Wallet Address is required!");
+    if (employeeObj.wallet.trim() === "") return setErrorMessage("Wallet Address is required!");
+    else {
+      dispatch(setIsLoading({ value: true }));
+      write();
+
+      // const newEmployeeObj = {
+      //   id: 7,
+      //   // email: employeeObj.email,
+      //   email: "alex@honeybadgerhr.com",
+      //   wallet: employeeObj.wallet,
+      //   // first_name: employeeObj.first_name,
+      //   first_name: "Alex",
+      //   // last_name: employeeObj.last_name,
+      //   last_name: "Smith",
+      //   avatar: "https://reqres.in/img/faces/1-image.jpg",
+      //   is_salary: true,
+      //   pay_rate: 52_000,
+      // };
+      // dispatch(addNewEmployee({ newEmployeeObj }));
+      // dispatch(showNotification({ message: "New Employee Added!", status: 1 }));
+      // closeModal();
     }
   };
 
@@ -50,7 +107,7 @@ function AddEmployeeModalBody({ closeModal }: props) {
 
   return (
     <>
-      <InputText
+      {/* <InputText
         type="text"
         defaultValue={employeeObj.first_name}
         updateType="first_name"
@@ -75,7 +132,7 @@ function AddEmployeeModalBody({ closeModal }: props) {
         containerStyle="mt-4"
         labelTitle="Email Id"
         updateFormValue={updateFormValue}
-      />
+      /> */}
 
       <InputText
         type="text"
@@ -88,11 +145,11 @@ function AddEmployeeModalBody({ closeModal }: props) {
 
       <ErrorText styleClass="mt-16">{errorMessage}</ErrorText>
       <div className="modal-action">
-        <button className="btn btn-ghost" onClick={() => closeModal()}>
+        <button disabled={isLoading} className="btn btn-ghost" onClick={() => closeModal()}>
           Cancel
         </button>
-        <button className="btn btn-primary px-6" onClick={() => saveNewLead()}>
-          Save
+        <button disabled={isLoading} className="btn btn-primary px-6" onClick={() => saveNewEmployee()}>
+          {isLoading ? <span className="loading text-primary loading-bars loading-md"></span> : "Save"}
         </button>
       </div>
     </>
