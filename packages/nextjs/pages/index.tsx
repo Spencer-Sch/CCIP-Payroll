@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from "react";
 // import Link from "next/link";
 import { useRouter } from "next/router";
 import type { NextPageWithLayout } from "./_app";
-import { setIsConnected } from "~~/auth/authSlice";
+// import { setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
@@ -15,15 +15,17 @@ const LandingPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (web3auth.connected) {
-      dispatch(setIsConnected({ isConnected: true }));
+      web3auth.logout();
+      // dispatch(setIsConnected({ isConnected: true }));
     }
   }, [dispatch]);
 
   function launchDapp() {
     if (isConnected) {
       // redirect to dashboard if logged in
-      router.push("/dapp/dashboard");
-      return;
+      // web3auth.logout();
+      // router.push("/dapp/dashboard");
+      // return;
     }
     // redirect to login if not logged in
     router.push("/login");
