@@ -1,18 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useState } from "react";
+// import Payroll from "../../../../../hardhat/artifacts/contracts/Payroll.sol/Payroll.json";
 // import Image from "next/image";
 import TitleCard from "../../components/Cards/TitleCard";
 import SearchBar from "../../components/Input/SearchBar";
 import { RECENT_PAYMENTS } from "../../utils/dummyData";
+// uncomment @todo
+// import { useContractEvent } from "wagmi";
 // import { showNotification } from "../common/headerSlice";
 // import moment from "moment";
 // import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
 import FunnelIcon from "@heroicons/react/24/outline/FunnelIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
-
-// uncomment @todo
-//import { useContractWrite } from "wagmi";
-//import Payroll from "../../../../../hardhat/artifacts/contracts/Payroll.sol/Payroll.json";
 
 //@todo add buttons to pay single employee, pay all salary employees, pay all hourly employees, and pay all employees?
 

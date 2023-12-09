@@ -41,7 +41,8 @@ function AddEmployeeModalBody({ closeModal }: props) {
     address: payrollAddress,
     abi: payrollABI,
     functionName: "addEmployee",
-    args: [employeeObj.wallet, true, 52_000n],
+    args: [employeeObj.wallet, true, 1n],
+    // args: [employeeObj.wallet, true, parseEther("0.000000000000052")],
     onSuccess(data: any) {
       console.log("addEmployee Data: ", data); //will data be the contract addresses?
       dispatch(setIsLoading({ value: false }));
