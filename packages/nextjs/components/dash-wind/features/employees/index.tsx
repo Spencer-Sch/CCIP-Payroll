@@ -99,9 +99,9 @@ function Employees() {
     abi: payrollABI,
     functionName: "getSalariedEmployees",
     chainId: Number(chainId),
-    onSuccess(data) {
-      console.log("salariedEmployeeAddresses: ", data);
-    },
+    // onSuccess(data) {
+    //   // console.log("salariedEmployeeAddresses: ", data);
+    // },
     onError(error) {
       console.error("getSalariedEmployees error: ", error);
       setErrorMsg("getSalariedEmployees error");
@@ -113,7 +113,7 @@ function Employees() {
     abi: payrollABI,
     eventName: "EmployeeAdded",
     listener() {
-      console.log("employee added! refetching employees...");
+      // console.log("employee added! refetching employees...");
       refetchSalariedEmployees();
       // refetchSalariedEmployees().then(() => {
       //   if (getSalariedEmployeesSuccess) {
@@ -128,7 +128,7 @@ function Employees() {
     abi: payrollABI,
     eventName: "EmployeeFired",
     listener() {
-      console.log("employee fired! refetching employees...");
+      // console.log("employee fired! refetching employees...");
       refetchSalariedEmployees().then(() => {
         if (getSalariedEmployeesSuccess) {
           setIsRemovingEmpAndFetching(false);

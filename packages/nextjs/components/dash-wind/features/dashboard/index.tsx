@@ -67,11 +67,11 @@ function Dashboard() {
     abi: payrollABI,
     functionName: "paySingleEmployee",
     args: [paymentObj.address, paymentObj.hours_worked],
-    onSuccess(data: any) {
-      console.log("paySingleEmployee Data: ", data);
-    },
+    // onSuccess(data: any) {
+    //   // console.log("paySingleEmployee Data: ", data);
+    // },
     onError(data: any) {
-      console.log("paySingleEmployee Error: ", data);
+      console.error("paySingleEmployee Error: ", data);
     },
   });
 
@@ -89,19 +89,19 @@ function Dashboard() {
     listener(log: any) {
       console.log("singleEmployeePaid log: ", log);
 
-      const rootPaymentsObj: { payments: any[] } = {
-        payments: [],
-      };
-      const paymentObj = {
-        employeeAddress: log[0].args._employeeAddress,
-        amount: log[0].args._amount,
-      };
-      rootPaymentsObj.payments.push(paymentObj);
-      // console.log(`employee ${wallet} paid ${amount}`);
-      // save to local storage...
-      // const payments = localStorage.getItem("payments");
-      console.log("session storage set payment: ", JSON.stringify(rootPaymentsObj));
-      sessionStorage.setItem("payments", JSON.stringify(rootPaymentsObj));
+      // const rootPaymentsObj: { payments: any[] } = {
+      //   payments: [],
+      // };
+      // const paymentObj = {
+      //   employeeAddress: log[0].args._employeeAddress,
+      //   amount: log[0].args._amount,
+      // };
+      // rootPaymentsObj.payments.push(paymentObj);
+      // // console.log(`employee ${wallet} paid ${amount}`);
+      // // save to local storage...
+      // // const payments = localStorage.getItem("payments");
+      // console.log("session storage set payment: ", JSON.stringify(rootPaymentsObj));
+      // sessionStorage.setItem("payments", JSON.stringify(rootPaymentsObj));
       // if (payments) {
       //   console.log(
       //     "local storage set item 1: ",
@@ -165,10 +165,10 @@ function Dashboard() {
             labelTitle="Employee Address"
             updateFormValue={updateFormValue}
           />
-          {errorMessage && <ErrorText styleClass="">{errorMessage}</ErrorText>}
           <button disabled={isLoading} className="mt-5 btn btn-primary btn-block px-6" onClick={() => payEmployee()}>
             {isLoading ? <span className="loading text-primary loading-bars loading-md"></span> : "Pay Employee"}
           </button>
+          {errorMessage && <ErrorText styleClass="">{errorMessage}</ErrorText>}
         </div>
       </div>
 

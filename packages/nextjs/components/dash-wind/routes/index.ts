@@ -12,7 +12,7 @@ const Page404 = lazy(() => import("../pages/protected/_404"));
 // const Team = lazy(() => import("../pages/protected/Team"));
 // const Transactions = lazy(() => import("../pages/protected/Transactions"));
 const Payments = lazy(() => import("../pages/protected/Payments"));
-const Bills = lazy(() => import("../pages/protected/Bills"));
+// const Bills = lazy(() => import("../pages/protected/Bills"));
 // const ProfileSettings = lazy(() => import("../pages/protected/ProfileSettings"));
 // const GettingStarted = lazy(() => import("../pages/GettingStarted"));
 // const DocFeatures = lazy(() => import("../pages/DocFeatures"));
@@ -51,10 +51,10 @@ const routes = [
   //   path: "/settings-profile",
   //   component: ProfileSettings,
   // },
-  {
-    path: "/settings-billing",
-    component: Bills,
-  },
+  // {
+  //   path: "/settings-billing",
+  //   component: Bills,
+  // },
   // {
   //   path: "/getting-started",
   //   component: GettingStarted,

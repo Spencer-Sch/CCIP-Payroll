@@ -153,7 +153,7 @@ function Payments() {
   return (
     <>
       <TitleCard
-        title="Payment History"
+        title="Payment History (placeholder)"
         topMargin="mt-2"
         TopSideButtons={
           <TopSideButtons applySearch={applySearch} applyFilter={applyFilter} removeFilter={removeFilter} />

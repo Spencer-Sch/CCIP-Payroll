@@ -62,9 +62,9 @@ export default function DeployForm({ ownerAddress }: props) {
     args: [],
     value: parseEther("0.000000000000000001"),
     // value: 100_000_000_000_000_000n,
-    onSuccess(data: any) {
-      console.log("contract deployed! Data: ", data); //will data be the contract addresses?
-    },
+    // onSuccess(data: any) {
+    //   // console.log("contract deployed! Data: ", data); //will data be the contract addresses?
+    // },
     onError(error: any) {
       console.error("contract deploy error!", error); //error message
     },
@@ -75,10 +75,10 @@ export default function DeployForm({ ownerAddress }: props) {
   // Function to handle button click
   const handleDeployClick = () => {
     if (isConnected) {
-      console.log("writing...");
+      // console.log("writing...");
       write();
     } else {
-      console.log("Wallet not connected");
+      // console.log("Wallet not connected");
     }
   };
 
@@ -87,7 +87,7 @@ export default function DeployForm({ ownerAddress }: props) {
     abi: payrollFactoryABI,
     eventName: "TokenTransferorDeployed",
     listener(log) {
-      console.log("TokenTransferorDeployed: ", trim(log[0].data));
+      // console.log("TokenTransferorDeployed: ", trim(log[0].data));
       setNewTokenTransferorContractAddress(trim(log[0].data).toString());
     },
   });
@@ -96,7 +96,7 @@ export default function DeployForm({ ownerAddress }: props) {
     abi: payrollFactoryABI,
     eventName: "PayrollDeployed",
     listener(log) {
-      console.log("PayrollDeployed: ", trim(log[0].data).toString().slice(0, 42));
+      // console.log("PayrollDeployed: ", trim(log[0].data).toString().slice(0, 42));
       setNewPayrollContractAddress(trim(log[0].data).toString().slice(0, 42));
     },
   });
@@ -116,7 +116,9 @@ export default function DeployForm({ ownerAddress }: props) {
             <button
               onClick={() => handleDeployClick()}
               disabled={isLoading || isSuccess ? true : false}
-              className={"btn mt-2 w-full btn-primary mb-4" + (isLoading ? " loading" : "")}
+              className={
+                "btn mt-2 w-full btn-primary mb-4" + (isLoading ? " loading loading-bars loading-md text-primary" : "")
+              }
             >
               Deploy Contract
             </button>

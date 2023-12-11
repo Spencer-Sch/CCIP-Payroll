@@ -50,7 +50,7 @@ function EmployeeProfile({ id }: { id: string }) {
   return (
     <>
       <TitleCard
-        title="Employee Profile"
+        title="Employee Profile (placeholder)"
         topMargin="mt-2"
         TopSideButtons={editMode ? <></> : <TopSideButtons />}
         topSideButtonsLeft={true}
