@@ -248,6 +248,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+
 "@chainlink/contracts-ccip@npm:^1.2.1":
   version: 1.2.1
   resolution: "@chainlink/contracts-ccip@npm:1.2.1"
