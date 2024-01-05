@@ -13,6 +13,10 @@ import { RECENT_PAYMENTS } from "../../utils/dummyData";
 import FunnelIcon from "@heroicons/react/24/outline/FunnelIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 
+// uncomment @todo
+//import { useContractWrite } from "wagmi";
+//import Payroll from "../../../../../hardhat/artifacts/contracts/Payroll.sol/Payroll.json";
+
 //@todo add buttons to pay single employee, pay all salary employees, pay all hourly employees, and pay all employees?
 
 // const chainId = process.env.NEXT_PUBLIC_TARGET_LOCAL_CHAIN

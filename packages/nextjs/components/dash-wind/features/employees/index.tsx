@@ -82,6 +82,7 @@ function Employees() {
    */
 
   // // uncomment below @todo
+
   const {
     data: salariedEmployeeAddresses, // address[]
     // isError,
@@ -156,6 +157,7 @@ function Employees() {
       setErrorMsg("removeEmployee error");
     },
   });
+
   // const {
   //   data: hourlyEmployeeAddresses, // address[]
   //   isError,
@@ -175,12 +177,48 @@ function Employees() {
   // } = useContractRead({
   //   address: process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS,
   //   abi: payrollABI,
+
   //   functionName: "isEmployee",
   //   //@todo where do we need to get this address from?
   //   // figured we should check if an address is an employee
   //   // before owner/company is allwoed to add or delete
   //   args: [userAddress],
   //   chainId: Number(chainId),
+  // });
+
+  //   functionName: "getHourlyEmployees",
+  //   chainId: Number(chainId),
+  // });
+
+  // // this will return a bool from contract as to if the address is an employee true = employee exists
+  // const {
+  //   data: isEmployee,
+  //   // isError,
+  //   // isLoading,
+  // } = useContractRead({
+  //   address: process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS,
+  //   abi: payrollABI,
+  //   functionName: "isEmployee",
+  //   //@todo where do we need to get this address from?
+  //   // figured we should check if an address is an employee
+  //   // before owner/company is allwoed to add or delete
+  //   args: [userAddress],
+  //   chainId: Number(chainId),
+  // });
+
+  // // hook to add employee to the contract @todo
+  // // need their address, a bool _isSalary, uint256 _payRate(hourly rate if isSalary is false, otherwise annual salary)
+  // const { data, isLoading, isSuccess, write } = useContractWrite({
+  //   address: process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS,
+  //   abi: payrollABI,
+  //   functionName: "addEmployee",
+  //   args: [],
+  //   onSuccess(data: any) {
+  //     console.log("employee added! Data: ", data); //will data be the contract addresses?
+  //   },
+  //   onError(error: any) {
+  //     console.error("employee add error!", error); //error message
+  //   },
   // });
 
   // // hook to set or change an employees salary if we need it, not necessary for stuff rn
@@ -226,6 +264,12 @@ function Employees() {
     // Kaz & Trevor @todo
     // this function will be responsible for deleting an employee
     // WAGMI HOOK
+    // const { data, isLoading, isSuccess, write } = useContractWrite({
+    //   address: process.env.NEXT_PUBLIC_PAYROLL_CONTRACT_ADDRESS,
+    //   abi: payrollABI,
+    //   functionName: "removeEmployee",
+    //   args: [employeeAddress]
+    // });
     /*-------------------------------------*/
     setEmpAddiToRemove(address);
     setIsRemovingEmpAndFetching(true);
