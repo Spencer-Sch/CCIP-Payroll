@@ -6,7 +6,7 @@ async function main() {
   console.log("Deploying contracts with the account:", deployer.address);
 
   // Add the addresses of the dependencies of your Payroll contract
-  const ccipTokenTransferorAddress = "0xFFc15127eB60C4Ab1a2e5e0319615ca0982952f2"; // deployed via script
+  const ccipTokenTransferorAddress = "0x21d762ab159676d3bd05e12A95699C1d0b043A48"; // deployed via script
   const bnmTokenAddress = "0xf1E3A5842EeEF51F2967b3F05D45DD4f4205FF40"; //BnM Mumbai
 
   // Deploy the Payroll contract

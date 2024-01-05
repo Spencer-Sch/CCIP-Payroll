@@ -1,12 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import InputText from "~~/components/dash-wind/components/Input/InputText";
+// import InputText from "~~/components/dash-wind/components/Input/InputText";
 import ErrorText from "~~/components/dash-wind/components/Typography/ErrorText";
-import { UpdateFormValues } from "~~/components/dash-wind/types/FormTypes";
+
+// import { UpdateFormValues } from "~~/components/dash-wind/types/FormTypes";
 
 interface props {
-  updateFormValue: ({ updateType, value }: UpdateFormValues) => void;
-  registerObj: { emailId: string };
+  // updateFormValue: ({ updateType, value }: UpdateFormValues) => void;
+  // registerObj: { emailId: string };
   loading?: boolean;
   errorMessage: string;
   registerCompany: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -14,8 +15,8 @@ interface props {
 }
 
 export default function registerForm({
-  updateFormValue,
-  registerObj,
+  // updateFormValue,
+  // registerObj,
   loading,
   errorMessage,
   registerCompany,
@@ -25,7 +26,7 @@ export default function registerForm({
     <div className="py-24 px-10">
       <h2 className="text-2xl font-semibold mb-2 text-center">Register</h2>
       <form>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <InputText
             defaultValue={registerObj.emailId}
             updateType="emailId"
@@ -33,7 +34,7 @@ export default function registerForm({
             labelTitle="Email"
             updateFormValue={updateFormValue}
           />
-        </div>
+        </div> */}
 
         <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
         <button

@@ -1,22 +1,21 @@
 function TemplatePointers() {
   return (
     <>
-      <h1 className="text-2xl mt-8 font-bold">Admin Dashboard Starter Kit</h1>
+      <h1 className="text-2xl mt-8 font-bold">CCIP Powered Payroll for Enterprise</h1>
       <p className="py-2 mt-4">
-        ✓ <span className="font-semibold">Light/dark</span> mode toggle
+        ✓ Pay employees on <span className="font-semibold">any chain in any token</span>
       </p>
       <p className="py-2 ">
-        ✓ <span className="font-semibold">Redux toolkit</span> and other utility libraries configured
+        ✓ <span className="font-semibold">Reduce administrative costs</span>
       </p>
       <p className="py-2">
-        ✓ <span className="font-semibold">Calendar, Modal, Sidebar </span> components
+        ✓ <span className="font-semibold">Instant & Regular</span> payment for employees
       </p>
       <p className="py-2  ">
-        ✓ User-friendly <span className="font-semibold">documentation</span>
+        ✓ <span className="font-semibold">Automated process</span> for employers
       </p>
       <p className="py-2  mb-4">
-        ✓ <span className="font-semibold">Daisy UI</span> components,{" "}
-        <span className="font-semibold">Tailwind CSS</span> support
+        ✓ <span className="font-semibold">Own</span> your company payroll
       </p>
     </>
   );

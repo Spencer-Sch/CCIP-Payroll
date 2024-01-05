@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import type { NextPageWithLayout } from "../_app";
-import Transactions from "~~/components/dash-wind/pages/protected/Transactions";
+import Payments from "~~/components/dash-wind/pages/protected/Payments";
 // import { MetaHeader } from "~~/components/MetaHeader";
 import DashLayout from "~~/components/layouts/DashLayout";
 
@@ -9,7 +9,7 @@ import DashLayout from "~~/components/layouts/DashLayout";
 }
 
 const DappDashboard: NextPageWithLayout = () => {
-  return <Transactions />;
+  return <Payments />;
 };
 
 DappDashboard.getLayout = function getLayout(page: ReactElement) {

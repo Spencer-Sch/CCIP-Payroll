@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { UpdateFormValues } from "../../types/FormTypes";
+// import { UpdateFormValues } from "../../types/FormTypes";
 import LandingIntro from "./LandingIntro";
 import { Address, createWalletClient, custom } from "viem";
 import { polygonMumbai } from "viem/chains";
+import { useConnect } from "wagmi";
 import { setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 import { useMyDispatch } from "~~/components/dash-wind/app/store";
@@ -13,21 +14,27 @@ import RegisterForm from "~~/components/web-3-crew/register-page/RegisterForm";
 type RegisterState = "init" | "company-deploy" | "employee-complete" | "loading";
 
 function Register() {
-  const INITIAL_REGISTER_OBJ = {
-    emailId: "",
-  };
+  // const INITIAL_REGISTER_OBJ = {
+  //   emailId: "",
+  // };
 
   // const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [registerState, setRegisterState] = useState<RegisterState>("init");
-  const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
+  // const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
   const [walletAddress, setWalletAddress] = useState<Address | null>(null);
+  const { connect, connectors, error } = useConnect();
 
   const dispatch = useMyDispatch();
 
   async function login() {
     try {
       await web3auth.connect();
+      connect({ connector: connectors[6] });
+      if (error) {
+        console.error(error);
+        // console.error("wagmi connect error: from Register - login(): ", error);
+      }
       if (web3auth.connected) {
         dispatch(setIsConnected({ isConnected: true }));
       }
@@ -38,7 +45,7 @@ function Register() {
 
   async function getAccounts() {
     if (!web3auth.provider) {
-      console.log("from Register - getAccounts: provider not defined");
+      // console.log("from Register - getAccounts: provider not defined");
       return;
     }
     const client = createWalletClient({
@@ -49,6 +56,8 @@ function Register() {
 
     // Get user's public address
     const [address] = await client.getAddresses();
+    // console.log("user address: ", address);
+
     return address;
   }
 
@@ -56,45 +65,48 @@ function Register() {
     e.preventDefault();
     setErrorMessage("");
 
-    if (registerObj.emailId.trim() === "") return setErrorMessage("Email is required!");
-    else {
-      setRegisterState("loading");
-      console.log("logging in company...");
-      await login();
-      // Account Abstraction goes here...?
-      console.log("getting account address...");
-      const address = await getAccounts();
-      if (address) {
-        // Prompt user to fund wallet?
-        setWalletAddress(address);
-        // Prompt use to deploy contract using wallet address
-        setRegisterState("company-deploy");
-      }
+    // if (registerObj.emailId.trim() === "") return setErrorMessage("Email is required!");
+    // else {
+    setRegisterState("loading");
+    // console.log("logging in company...");
+    await login();
+    // Account Abstraction goes here...? -- kinda is with login
+    // grab account address
+    const address = await getAccounts();
+    // console.log("connected address: ", address);
+
+    // console.log("getting account address...");
+    if (address) {
+      // Prompt user to fund wallet?
+      setWalletAddress(address);
+      // Prompt use to deploy contract using wallet address
+      setRegisterState("company-deploy");
     }
+    // }
   };
 
   const registerEmployee = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setErrorMessage("");
 
-    if (registerObj.emailId.trim() === "") return setErrorMessage("Email is required!");
-    else {
-      setRegisterState("loading");
-      console.log("logging in employee...");
-      await login();
-      // Account Abstraction goes here...?
-      const address = await getAccounts();
-      if (address) {
-        setWalletAddress(address);
-        setRegisterState("employee-complete");
-      }
+    // if (registerObj.emailId.trim() === "") return setErrorMessage("Email is required!");
+    // else {
+    setRegisterState("loading");
+    // console.log("logging in employee...");
+    await login();
+    // Account Abstraction goes here...?
+    const address = await getAccounts();
+    if (address) {
+      setWalletAddress(address);
+      setRegisterState("employee-complete");
     }
+    // }
   };
 
-  const updateFormValue = ({ updateType, value }: UpdateFormValues) => {
-    setErrorMessage("");
-    setRegisterObj({ ...registerObj, [updateType]: value });
-  };
+  // const updateFormValue = ({ updateType, value }: UpdateFormValues) => {
+  //   setErrorMessage("");
+  //   setRegisterObj({ ...registerObj, [updateType]: value });
+  // };
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center">
@@ -103,11 +115,15 @@ function Register() {
           <div className="">
             <LandingIntro />
           </div>
-          {registerState === "loading" && <div>Loading...</div>}
+          {registerState === "loading" && (
+            <div className="h-full w-full flex items-center justify-center">
+              <div className="loading loading-bars loading-lg text-primary"></div>
+            </div>
+          )}
           {registerState === "init" && (
             <RegisterForm
-              updateFormValue={updateFormValue}
-              registerObj={registerObj}
+              // updateFormValue={updateFormValue}
+              // registerObj={registerObj}
               // loading={loading}
               errorMessage={errorMessage}
               registerCompany={registerCompany}

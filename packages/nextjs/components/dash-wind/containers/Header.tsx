@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from "react";
 // import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 import { useRouter } from "next/router";
-import { openRightDrawer } from "../features/common/rightDrawerSlice";
-import { RIGHT_DRAWER_TYPES } from "../utils/globalConstantUtil";
+// import { openRightDrawer } from "../features/common/rightDrawerSlice";
+// import { RIGHT_DRAWER_TYPES } from "../utils/globalConstantUtil";
 import { themeChange } from "theme-change";
+import { Address, createWalletClient, custom } from "viem";
+import { polygonMumbai } from "viem/chains";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
-import BellIcon from "@heroicons/react/24/outline/BellIcon";
+// import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
 import { setIsConnected } from "~~/auth/authSlice";
+// import { setIsAdmin, setIsConnected } from "~~/auth/authSlice";
 import { web3auth } from "~~/auth/web3auth";
 // import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { MyState, useMyDispatch, useMySelector } from "~~/components/dash-wind/app/store";
-import { Address } from "~~/components/web-3-crew/Address";
+import { Address as AddressDisplay } from "~~/components/web-3-crew/Address";
 
 function Header() {
   const dispatch = useMyDispatch();
-  const { noOfNotifications, pageTitle } = useMySelector((state: MyState) => state.header);
+  const { pageTitle } = useMySelector((state: MyState) => state.header);
+  // const { noOfNotifications, pageTitle } = useMySelector((state: MyState) => state.header);
+  // const { isAdmin } = useMySelector((state: MyState) => state.auth);
   const [currentTheme, setCurrentTheme] = useState(
     typeof window !== "undefined" ? localStorage.getItem("theme") : null,
   );
+  const [address, setAddress] = useState<Address | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    async function getAddress() {
+      const address = await getAccounts();
+      if (address) {
+        setAddress(address);
+      }
+    }
+    getAddress();
+  }, []);
 
   useEffect(() => {
     themeChange(false);
@@ -35,16 +51,37 @@ function Header() {
     // 👆 false parameter is required for react project
   }, [currentTheme]);
 
+  async function getAccounts() {
+    if (!web3auth.provider) {
+      // console.log("from login - getAccounts: provider not defined");
+      return;
+    }
+    const client = createWalletClient({
+      // account: privateKeyToAccount('0x...'); // from viem
+      chain: polygonMumbai,
+      transport: custom(web3auth.provider),
+    });
+
+    // Get user's public address
+    const [address] = await client.getAddresses();
+    //console.log("user address: ", address);
+    return address as Address;
+  }
+
   // Opening right sidebar for notification
-  const openNotification = () => {
-    dispatch(openRightDrawer({ header: "Notifications", bodyType: RIGHT_DRAWER_TYPES.NOTIFICATION }));
-  };
+  // const openNotification = () => {
+  //   dispatch(openRightDrawer({ header: "Notifications", bodyType: RIGHT_DRAWER_TYPES.NOTIFICATION }));
+  // };
 
   async function logoutUser() {
     await web3auth.logout();
     dispatch(setIsConnected({ isConnected: false }));
     router.push("/login");
   }
+
+  // function toggleIsAdmin() {
+  //   dispatch(setIsAdmin({ isAdmin: !isAdmin }));
+  // }
 
   return (
     <>
@@ -58,6 +95,9 @@ function Header() {
         </div>
 
         <div className="order-last">
+          {/* <button className="btn btn-ghost mr-4  btn-circle" onClick={() => toggleIsAdmin()}>
+            Toggle isAdmin
+          </button> */}
           {/* Multiple theme selection, uncomment this if you want to enable multiple themes selection, 
                 also includes corporate and retro themes in tailwind.config file */}
 
@@ -85,33 +125,28 @@ function Header() {
           </label>
 
           {/* Notification icon */}
-          <button className="btn btn-ghost ml-4  btn-circle" onClick={() => openNotification()}>
+          {/* <button className="btn btn-ghost ml-4  btn-circle" onClick={() => openNotification()}>
             <div className="indicator">
               <BellIcon className="h-6 w-6" />
               {noOfNotifications > 0 ? (
                 <span className="indicator-item badge badge-secondary badge-sm">{noOfNotifications}</span>
               ) : null}
             </div>
-          </button>
+          </button> */}
 
           {/* Profile icon, opening menu on click */}
           <div className="dropdown dropdown-end ml-4">
             <label tabIndex={0} className="btn btn-ghost">
               <div className="flex justify-center items-center">
                 {/* Wallet Address Display */}
-                <Address
-                  address="0xB9555E2f3e34aDfDB5d033C5af73de6e2385A770"
-                  disableAddressLink={true}
-                  format="short"
-                  size="base"
-                />
+                <AddressDisplay address={address?.toString()} disableAddressLink={true} format="short" size="base" />
               </div>
             </label>
             <ul
               tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li className="justify-between">
+              {/* <li className="justify-between">
                 <Link href="/dapp/settings-profile">
                   Profile Settings
                   <span className="badge">New</span>
@@ -120,7 +155,7 @@ function Header() {
               <li className="">
                 <Link href="/dapp/settings-billing">Bill History</Link>
               </li>
-              <div className="divider mt-0 mb-0"></div>
+              <div className="divider mt-0 mb-0"></div> */}
               <li>
                 <a onClick={logoutUser}>Logout</a>
               </li>
