@@ -228,8 +228,6 @@ function Login() {
                   updateFormValue={updateFormValue}
                 />
               </div>
-              <p>isOwner: {isOwner}</p>
-              <p>isEmployee: {isEmployee}</p>
 
               <button
                 onClick={login}
