@@ -70,9 +70,9 @@ function Login() {
     functionName: "isOwner",
     args: userAddress ? [userAddress] : [],
     chainId: Number(chainId),
-    onSuccess(data) {
-      console.log("useContractRead - isOwner: ", data);
-    },
+    // onSuccess(data) {
+    //   // console.log("useContractRead - isOwner: ", data);
+    // },
     onError(err) {
       console.error("useContractRead - isOwner: ", err);
     },
@@ -95,20 +95,20 @@ function Login() {
     functionName: "doesEmployeeExist",
     args: userAddress ? [userAddress] : [],
     chainId: Number(chainId),
-    onSuccess(data) {
-      console.log("useContractRead - isEmployee: ", data);
-    },
+    // onSuccess(data) {
+    //   // console.log("useContractRead - isEmployee: ", data);
+    // },
     onError(err) {
       console.error("useContractRead - isEmployee: ", err);
     },
   });
 
-  console.log("isOwnerSuccess: ", isOwnerSuccess);
-  console.log("isEmployeeSuccess: ", isEmployeeSuccess);
+  // console.log("isOwnerSuccess: ", isOwnerSuccess);
+  // console.log("isEmployeeSuccess: ", isEmployeeSuccess);
 
   useEffect(() => {
-    console.log("is owner: ", isOwner);
-    console.log("is employee: ", isEmployee);
+    // console.log("is owner: ", isOwner);
+    // console.log("is employee: ", isEmployee);
     // console.log("login 8.5");
     if (isOwner) {
       // console.log("login 9");
@@ -187,7 +187,7 @@ function Login() {
   // func to grab the connected wallet address
   async function getAccounts() {
     if (!web3auth.provider) {
-      console.log("from login - getAccounts: provider not defined");
+      // console.log("from login - getAccounts: provider not defined");
       return;
     }
     const client = createWalletClient({
@@ -198,7 +198,7 @@ function Login() {
 
     // Get user's public address
     const [userAddress] = await client.getAddresses();
-    console.log("user address: ", userAddress);
+    // console.log("user address: ", userAddress);
     return userAddress as Address;
   }
 
@@ -224,7 +224,7 @@ function Login() {
                   defaultValue={loginObj.contractAddress}
                   updateType="contractAddress"
                   containerStyle="mt-4"
-                  labelTitle="Contract Address"
+                  labelTitle="MVMT Contract Address"
                   updateFormValue={updateFormValue}
                 />
               </div>
