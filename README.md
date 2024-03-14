@@ -1,4 +1,4 @@
-<a hrel="https://www.youtube.com/watch?v=BrkgqdQXIII" align="center" target="_blank">
+<a href="https://www.youtube.com/watch?v=BrkgqdQXIII" align="center" target="_blank">
     <img src="hbhr-demo-thumbnail.png" alt="Honey Badger Demo Thumbnail" />
 </a>
 <br>
